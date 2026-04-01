@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unknown Chapter — Paris F&B Recommendations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/dompurify@3.1.6/dist/purify.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --cream: #FAF8F4; --dark: #1C1C1E; --gold: #C9A96E; --border: #EAE5DC;
+  --restaurant: #C0392B; --pastry: #D4880A; --cafe: #16835E; --grocery: #6B4CA3; --hotel: #2B5F8E;
+}
+body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--dark); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+#header { padding: 14px 24px; background: white; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 20px; flex-shrink: 0; flex-wrap: wrap; }
+.brand h1 { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; letter-spacing: 0.08em; }
+.brand p  { font-size: 10px; color: #999; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 2px; }
+.vdiv { width: 1px; height: 32px; background: var(--border); flex-shrink: 0; }
+
+#filters { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-btn { padding: 5px 13px; border-radius: 100px; border: 1.5px solid var(--border); background: white; font-size: 11.5px; font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer; transition: all .18s; color: #666; display: flex; align-items: center; gap: 5px; }
+.filter-btn:hover { border-color: var(--gold); color: var(--dark); }
+.filter-btn.active { color: white; border-color: transparent; }
+.filter-btn[data-cat="all"].active        { background: var(--dark); }
+.filter-btn[data-cat="restaurant"].active { background: var(--restaurant); }
+.filter-btn[data-cat="pastry"].active     { background: var(--pastry); }
+.filter-btn[data-cat="cafe"].active       { background: var(--cafe); }
+.filter-btn[data-cat="grocery"].active    { background: var(--grocery); }
+.filter-btn[data-cat="hotel"].active      { background: var(--hotel); }
+.dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+#main { display: flex; flex: 1; overflow: hidden; }
+#map  { flex: 1; z-index: 1; }
+
+#sidebar { width: 300px; flex-shrink: 0; overflow-y: auto; background: white; border-left: 1px solid var(--border); }
+#sidebar-header { padding: 13px 18px; border-bottom: 1px solid #F2EDE5; position: sticky; top: 0; background: white; z-index: 10; }
+#sidebar-headline { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+#sidebar-headline span { font-size: 11px; color: #999; letter-spacing: .05em; text-transform: uppercase; }
+#sidebar-count { font-weight: 700; color: var(--dark); font-size: 13px; }
+#group-controls { display: flex; gap: 6px; margin-top: 10px; }
+.group-btn { flex: 1; padding: 7px 10px; border-radius: 999px; border: 1px solid var(--border); background: #FBF9F6; color: #7A746D; font-size: 10.5px; font-weight: 600; cursor: pointer; transition: all .18s; }
+.group-btn.active { background: var(--dark); border-color: var(--dark); color: white; }
+.group-btn:hover { border-color: var(--gold); color: var(--dark); }
+
+.place-card { padding: 12px 18px; border-bottom: 1px solid #F2EDE5; cursor: pointer; transition: background .12s; }
+.place-card:hover  { background: #FBF9F6; }
+.place-card.active { background: #F5F0E8; }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 3px; }
+.card-name { font-size: 12.5px; font-weight: 600; line-height: 1.35; }
+.cat-tag { font-size: 9.5px; padding: 2px 7px; border-radius: 100px; color: white; white-space: nowrap; flex-shrink: 0; font-weight: 500; margin-top: 1px; }
+.card-address { font-size: 10.5px; color: #999; margin-bottom: 4px; }
+.card-cuisine { font-size: 10px; color: #7E6841; background: #FBF4E7; border: 1px solid #F0E2C5; border-radius: 999px; padding: 2px 8px; display: inline-flex; margin-bottom: 6px; }
+.card-meta { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+.card-rating { color: #D4A017; font-weight: 600; }
+.card-price  { color: #888; }
+.card-remark { font-size: 10.5px; color: var(--gold); margin-top: 3px; font-style: italic; }
+.marco-badge { display: inline-block; font-size: 9px; background: #FFF5E0; color: #A07830; border: 1px solid #F0DFB0; border-radius: 4px; padding: 1px 6px; font-weight: 600; margin-left: 4px; vertical-align: middle; }
+.veg-badge   { display: inline-block; font-size: 9px; background: #E8F5E9; color: #2E7D32; border: 1px solid #C8E6C9; border-radius: 4px; padding: 1px 6px; font-weight: 600; margin-left: 4px; vertical-align: middle; }
+
+.leaflet-popup-content-wrapper { border-radius: 12px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.13) !important; padding: 0 !important; overflow: hidden; }
+.leaflet-popup-content { margin: 0 !important; }
+.popup-inner { padding: 15px 16px; font-family: 'Inter', sans-serif; min-width: 210px; }
+.popup-tag  { display: inline-block; font-size: 9.5px; padding: 2px 9px; border-radius: 100px; color: white; font-weight: 500; margin-bottom: 8px; }
+.popup-name { font-size: 13.5px; font-weight: 700; margin-bottom: 3px; line-height: 1.3; }
+.popup-addr { font-size: 11px; color: #999; margin-bottom: 7px; }
+.popup-meta { display: flex; align-items: center; gap: 7px; font-size: 11px; margin-bottom: 7px; }
+.popup-rating  { color: #D4A017; font-weight: 700; }
+.popup-price   { color: #777; }
+.popup-reviews { color: #bbb; font-size: 10px; }
+.popup-cuisine { display: inline-flex; margin-bottom: 8px; padding: 3px 8px; border-radius: 999px; background: #FBF4E7; border: 1px solid #F0E2C5; color: #7E6841; font-size: 10px; font-weight: 600; }
+.popup-remark  { font-size: 10.5px; color: #B8914A; margin-bottom: 10px; font-style: italic; }
+.popup-link { display: inline-block; padding: 7px 13px; background: var(--dark); color: white !important; border-radius: 8px; font-size: 11px; font-weight: 500; text-decoration: none; font-family: 'Inter', sans-serif; }
+.popup-link:hover { background: #333; }
+
+.legend-box { background: white; padding: 10px 14px; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); font-family: 'Inter', sans-serif; font-size: 11px; line-height: 1.8; }
+.legend-item { display: flex; align-items: center; gap: 8px; color: #444; }
+.legend-dot        { width: 10px; height: 10px; border-radius: 50%; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.2); flex-shrink: 0; }
+.legend-dot-square { width: 10px; height: 10px; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.2); flex-shrink: 0; transform: rotate(45deg); }
+.group-section { border-bottom: 1px solid #F4EEE5; }
+.group-heading { position: sticky; top: 72px; z-index: 5; padding: 10px 18px 8px; background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.92)); backdrop-filter: blur(6px); }
+.group-title { font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #6A6257; }
+.group-subcount { font-size: 10px; color: #A49B91; margin-left: 6px; }
+
+#sidebar::-webkit-scrollbar { width: 3px; }
+#sidebar::-webkit-scrollbar-track { background: transparent; }
+#sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div class="brand">
+    <h1>Unknown Chapter</h1>
+    <p>Paris · F&amp;B Recommendations</p>
+  </div>
+  <div class="vdiv"></div>
+  <div id="filters">
+    <button class="filter-btn active" data-cat="all">全部</button>
+    <button class="filter-btn" data-cat="restaurant"><span class="dot" style="background:var(--restaurant)"></span>餐廳</button>
+    <button class="filter-btn" data-cat="pastry"><span class="dot" style="background:var(--pastry)"></span>甜點 / 朱古力</button>
+    <button class="filter-btn" data-cat="cafe"><span class="dot" style="background:var(--cafe)"></span>咖啡 / 茶</button>
+    <button class="filter-btn" data-cat="grocery"><span class="dot" style="background:var(--grocery)"></span>美食雜貨</button>
+    <button class="filter-btn" data-cat="hotel"><span class="dot" style="background:var(--hotel)"></span>住宿</button>
+  </div>
+</div>
+
+<div id="main">
+  <div id="map"></div>
+  <div id="sidebar">
+    <div id="sidebar-header">
+      <div id="sidebar-headline">
+        <span id="sidebar-title">地點</span>
+        <span id="sidebar-count">—</span>
+      </div>
+      <div id="group-controls">
+        <button class="group-btn active" data-group="list">全部地點</button>
+        <button class="group-btn" data-group="cuisine">按菜式</button>
+      </div>
+    </div>
+    <div id="place-list"></div>
+  </div>
+</div>
+
+<script>
+const COLORS = { restaurant:'#C0392B', pastry:'#D4880A', cafe:'#16835E', grocery:'#6B4CA3', hotel:'#2B5F8E' };
+const CAT_LABELS = { restaurant:'餐廳', pastry:'甜點 / 朱古力', cafe:'咖啡 / 茶', grocery:'美食雜貨', hotel:'住宿' };
+const CUISINE_ORDER = ['法式料理','日式料理','素食 / Vegan','意大利菜','西班牙菜','越南菜','葡萄酒 / 雞尾酒','Crêpe / 輕食','咖啡','茶','麵包 / Pastry','朱古力 / 甜點','雪糕','下午茶','食材 / Gourmet Grocery','乳酪 / Fromagerie','百貨 / Food Hall','住宿'];
+const CUISINE_LABELS = {
+  "Kodawari Ramen (Yokochō)": '日式料理',
+  'La Jacobine': '法式料理',
+  'Baillotte': '法式料理',
+  'Anicia': '素食 / Vegan',
+  'Midi12 Champs Élysées': 'Crêpe / 輕食',
+  "L'Ami Jean": '法式料理',
+  'Le Potager du Marais': '素食 / Vegan',
+  'Maslow 1er': '素食 / Vegan',
+  'La Réegalade Saint-Honoré': '法式料理',
+  'Faubourg Daimant': '素食 / Vegan',
+  'Les Enfants Rouges': '日式料理',
+  'Maslow Temple': '素食 / Vegan',
+  'JJ Beaumarchais': '法式料理',
+  'Bistro S': '法式料理',
+  'TOWA Restaurant': '法式料理',
+  'Petit Nuage Paris': '葡萄酒 / 雞尾酒',
+  'Poni': '葡萄酒 / 雞尾酒',
+  'Abuela Pigalle': '西班牙菜',
+  'VIA EMILIA': '意大利菜',
+  'Enni Udon': '日式料理',
+  'PHO 14 Opéra': '越南菜',
+  'Le Burgundy (Afternoon Tea)': '下午茶',
+  'Des Gâteaux et du Pain': '麵包 / Pastry',
+  'Jacques Genin': '朱古力 / 甜點',
+  'PLAQ Chocolat': '朱古力 / 甜點',
+  "La Maison d'Isabelle": '麵包 / Pastry',
+  'REŸS — Glaces Eternelles': '雪糕',
+  'Les Trois Chocolats': '朱古力 / 甜點',
+  "Brigat'": '麵包 / Pastry',
+  'Boulangerie Utopie': '麵包 / Pastry',
+  'Patrick Roger': '朱古力 / 甜點',
+  'La Pâtisserie Cyril Lignac': '麵包 / Pastry',
+  'Jugetsudo by Maruyama Nori': '茶',
+  'Tanat – Victoria': '咖啡',
+  'Tanat – Tiquetonne': '咖啡',
+  'Early Bird Coffee': '咖啡',
+  "Café d'Auteur": '咖啡',
+  'The Coffee': '咖啡',
+  'Jōhō': '咖啡',
+  'ARTESANO': '咖啡',
+  'La Grande Épicerie de Paris': '百貨 / Food Hall',
+  'G. Detou': '食材 / Gourmet Grocery',
+  'Fromagerie Griffon': '乳酪 / Fromagerie',
+  'Ardèche à Paris': '食材 / Gourmet Grocery',
+  'Hôtel Le Senat': '住宿',
+  '24 Rue Mouffetard': '住宿'
+};
+
+const places = [
+  { name:'Kodawari Ramen (Yokochō)',  cat:'restaurant', address:'29 Rue Mazarine, 75006',                     price:'$',   rating:4.5, reviews:16096, remark:'日本拉麵場景裝修', marco:false, veg:false, maps:'https://maps.app.goo.gl/bbRFqRpGx5WmPm4e7', lat:48.8546421, lng:2.3380705 },
+  { name:'La Jacobine',               cat:'restaurant', address:'59-61 Rue Saint-André des Arts, 75006',       price:'$$',  rating:4.6, reviews:5215,  remark:'',               marco:false, veg:false, maps:'https://maps.app.goo.gl/phoK5nisZAWmjmik7', lat:48.8532844, lng:2.3390695 },
+  { name:'Baillotte',                 cat:'restaurant', address:'16 Rue du Dragon, 75006',                     price:'$$',  rating:4.8, reviews:485,   remark:'法日 Fusion',    marco:true,  veg:false, maps:'https://maps.app.goo.gl/NMFRhd4yaDmAzrHY7', lat:48.8534766, lng:2.3309867 },
+  { name:'Anicia',                    cat:'restaurant', address:'97 Rue du Cherche-Midi, 75006',                price:'$$',  rating:4.8, reviews:1327,  remark:'有 Vegan 選項',  marco:false, veg:true,  maps:'https://maps.app.goo.gl/1RdXtP6YqMfxCXJN7', lat:48.8467029, lng:2.3212725 },
+  { name:'Midi12 Champs Élysées',     cat:'restaurant', address:'56 Rue Galilée, 75008',                       price:'$',   rating:4.9, reviews:497,   remark:'Crêperie',       marco:false, veg:false, maps:'https://maps.app.goo.gl/8ZmYvWfb94nwQqux8', lat:48.8714248, lng:2.2982983 },
+  { name:"L'Ami Jean",                cat:'restaurant', address:'27 Rue Malar, 75007',                         price:'$$$', rating:4.5, reviews:1330,  remark:'',               marco:false, veg:false, maps:'https://maps.app.goo.gl/b5L4cZKbkNAW4Bgu6', lat:48.8603183, lng:2.3059915 },
+  { name:'Le Potager du Marais',      cat:'restaurant', address:'26 Rue Saint-Paul, 75004',                    price:'$$',  rating:4.3, reviews:1878,  remark:'素食',           marco:false, veg:true,  maps:'https://maps.app.goo.gl/2trnLQn5dgwUrvRy6', lat:48.8537428, lng:2.3620301 },
+  { name:'Maslow 1er',                cat:'restaurant', address:'14 Quai de la Mégisserie, 75001',             price:'$$',  rating:4.9, reviews:17382, remark:'素食 Top Pick',  marco:false, veg:true,  maps:'https://maps.app.goo.gl/AU2VegZfe8dsta9bA', lat:48.8581541, lng:2.3443239 },
+  { name:'La Réegalade Saint-Honoré', cat:'restaurant', address:'106 Rue Saint-Honoré, 75001',                 price:'$$$', rating:4.5, reviews:1134,  remark:'',               marco:true,  veg:false, maps:'https://maps.app.goo.gl/yfuvQCeUhm1TAcBk9', lat:48.8615929, lng:2.3419447 },
+  { name:'Faubourg Daimant',          cat:'restaurant', address:'20 Rue du Faubourg Poissonnière, 75010',      price:'$$',  rating:4.6, reviews:4037,  remark:'素食 Top Pick',  marco:false, veg:true,  maps:'https://maps.app.goo.gl/XGtw2ehymZzJkosd6', lat:48.8722813, lng:2.3479886 },
+  { name:'Les Enfants Rouges',        cat:'restaurant', address:'9 Rue de Beauce, 75003',                      price:'$$',  rating:4.5, reviews:1180,  remark:'法日 Fusion',    marco:false, veg:false, maps:'https://maps.app.goo.gl/Mq6YjjxrhnHmpKzs6', lat:48.8629413, lng:2.3612184 },
+  { name:'Maslow Temple',             cat:'restaurant', address:'32 Rue de Picardie, 75003',                   price:'$$',  rating:4.9, reviews:6424,  remark:'素食 Top Pick',  marco:false, veg:true,  maps:'https://maps.app.goo.gl/XzF1HyDewvrGBx669', lat:48.8643899, lng:2.3635207 },
+  { name:'JJ Beaumarchais',           cat:'restaurant', address:'92 Bd Beaumarchais, 75011',                   price:'$$',  rating:4.8, reviews:1297,  remark:'素食 Top Pick',  marco:false, veg:true,  maps:'https://maps.app.goo.gl/79YPE1B6PWTRYGYE9', lat:48.8598784, lng:2.3677677 },
+  { name:'Bistro S',                  cat:'restaurant', address:'7 Rue Saint-Nicolas, 75012',                  price:'$$$', rating:4.8, reviews:544,   remark:'法日 Fusion',    marco:true,  veg:false, maps:'https://maps.app.goo.gl/Py8C6ffpkNjm1Bia6', lat:48.8508330, lng:2.3742541 },
+  { name:'TOWA Restaurant',           cat:'restaurant', address:'75 Rue Crozatier, 75012',                     price:'$$$', rating:4.8, reviews:618,   remark:'法日 Fusion',    marco:false, veg:false, maps:'https://maps.app.goo.gl/9k7apVYuiqHhjttb8', lat:48.8496627, lng:2.3792512 },
+  { name:'Petit Nuage Paris',         cat:'restaurant', address:'51 Rue Basfroi, 75011',                       price:'$$',  rating:4.9, reviews:1124,  remark:'Wine Bar',       marco:false, veg:false, maps:'https://maps.app.goo.gl/uoR6uBYfTkgMC7Uu8', lat:48.8565038, lng:2.3780071 },
+  { name:'Poni',                      cat:'restaurant', address:'24 Rue Saint-Lazare, 75009',                  price:'$$',  rating:4.8, reviews:3405,  remark:'Bistro / Cocktail', marco:false, veg:false, maps:'https://maps.app.goo.gl/jLwoCMyQdNsAoDYW6', lat:48.8767922, lng:2.3369415 },
+  { name:'Abuela Pigalle',            cat:'restaurant', address:'10 Bd de Clichy, 75018',                      price:'$$',  rating:4.5, reviews:1720,  remark:'西班牙菜',       marco:false, veg:false, maps:'https://maps.app.goo.gl/gfsGhnES9627',      lat:48.8823780, lng:2.3387108 },
+  { name:'VIA EMILIA',                cat:'restaurant', address:'22 Rue la Bruyère, 75009',                    price:'$$',  rating:4.9, reviews:782,   remark:'意大利菜',       marco:false, veg:false, maps:'https://maps.app.goo.gl/TjZc6hoWRAZSzHbU7', lat:48.8793160, lng:2.3351287 },
+  { name:'Enni Udon',                 cat:'restaurant', address:'6 Rue de la Renaissance, 75008',              price:'N/A', rating:4.6, reviews:898,   remark:'日式烏冬',       marco:false, veg:false, maps:'https://maps.app.goo.gl/rZuZts1JhzkDgihe7', lat:48.8674486, lng:2.3026997 },
+  { name:'PHO 14 Opéra',              cat:'restaurant', address:'17 Rue Molière, 75001',                       price:'$',   rating:4.2, reviews:2163,  remark:'越南河粉',       marco:false, veg:false, maps:'https://maps.app.goo.gl/A5BTf73XcdmSkTLr6', lat:48.8652723, lng:2.3360503 },
+  { name:'Le Burgundy (Afternoon Tea)', cat:'pastry', address:'6-8 Rue Duphot, 75001',                     price:'$$$', rating:4.6, reviews:811,   remark:'精品酒店 Afternoon Tea', marco:false, veg:false, maps:'https://maps.app.goo.gl/TU9PKWd2J83LV3Y77', lat:48.8682607, lng:2.3256161 },
+  { name:'Des Gâteaux et du Pain',     cat:'pastry', address:'89 Rue du Bac, 75007',                        price:'$',   rating:4.3, reviews:602,   remark:'',                      marco:true,  veg:false, maps:'https://maps.app.goo.gl/JDuzvA3xY6pshPmH9', lat:48.8538348, lng:2.3239294 },
+  { name:'Jacques Genin',              cat:'pastry', address:'27 Rue de Varenne, 75007',                    price:'$',   rating:4.5, reviews:292,   remark:'水果軟糖著名',          marco:false, veg:false, maps:'https://maps.app.goo.gl/beaCNogB2LGSfkkW7', lat:48.8538932, lng:2.3240707 },
+  { name:'PLAQ Chocolat',              cat:'pastry', address:'4 Rue du Nil, 75002',                         price:'$$',  rating:4.5, reviews:680,   remark:'',                      marco:false, veg:false, maps:'https://maps.app.goo.gl/7gVbGvmXUADfuyz37', lat:48.8678425, lng:2.3480821 },
+  { name:"La Maison d'Isabelle",       cat:'pastry', address:'47ter Bd Saint-Germain, 75005',               price:'$',   rating:4.5, reviews:4988,  remark:'',                      marco:false, veg:false, maps:'https://maps.app.goo.gl/9hmuwrwuFx4PyQRc7', lat:48.8498054, lng:2.3484699 },
+  { name:'REŸS — Glaces Eternelles',   cat:'pastry', address:'4 Rue du Bourg Tibourg, 75004',               price:'$',   rating:4.8, reviews:1297,  remark:'雪糕店',                marco:false, veg:false, maps:'https://maps.app.goo.gl/dzgSS8NgfKLPr3BE6', lat:48.8567788, lng:2.3558116 },
+  { name:'Les Trois Chocolats',        cat:'pastry', address:'45 Rue Saint-Paul, 75004',                    price:'$',   rating:4.8, reviews:629,   remark:'日系朱古力',            marco:true,  veg:false, maps:'https://maps.app.goo.gl/tBHgyCEuFLczqwqH6', lat:48.8543331, lng:2.3623435 },
+  { name:"Brigat'",                    cat:'pastry', address:'6 Rue du Pas de la Mule, 75003',              price:'$',   rating:4.8, reviews:1104,  remark:'',                      marco:false, veg:false, maps:'https://maps.app.goo.gl/C7rDCP2EP5ZsYSVk8', lat:48.8560190, lng:2.3672129 },
+  { name:'Boulangerie Utopie',         cat:'pastry', address:'20 Rue Jean-Pierre Timbaud, 75011',           price:'$',   rating:4.4, reviews:4057,  remark:'',                      marco:false, veg:false, maps:'https://maps.app.goo.gl/hE4y3QL6PDpKa5Hk8', lat:48.8653444, lng:2.3686168 },
+  { name:'Patrick Roger',              cat:'pastry', address:'108 Bd Saint-Germain, 75006',                 price:'$$',  rating:4.4, reviews:747,   remark:'朱古力',                marco:true,  veg:false, maps:'https://maps.app.goo.gl/M4CXTUWa6A2tFhQX9', lat:48.8518421, lng:2.3420444 },
+  { name:'La Pâtisserie Cyril Lignac', cat:'pastry', address:'2 Rue de Chaillot, 75116',                    price:'$',   rating:4.4, reviews:3379,  remark:'Kouign Amann 著名',     marco:false, veg:false, maps:'https://maps.app.goo.gl/T9mNLzG18FCdjSpK6', lat:48.8665994, lng:2.2968236 },
+  { name:'Jugetsudo by Maruyama Nori', cat:'cafe', address:'95 Rue de Seine, 75006',                     price:'N/A', rating:4.5, reviews:235,  remark:'日本綠茶',        marco:false, veg:false, maps:'https://maps.app.goo.gl/3yPiJDQL8Dhtzj1b6', lat:48.8519165, lng:2.3371278 },
+  { name:'Tanat – Victoria',           cat:'cafe', address:'22 Av. Victoria, 75001',                     price:'N/A', rating:4.7, reviews:392,  remark:'',                marco:false, veg:false, maps:'https://maps.app.goo.gl/W82aDArtRiWVF2BW6', lat:48.8582902, lng:2.3461958 },
+  { name:'Tanat – Tiquetonne',         cat:'cafe', address:'46 Rue Tiquetonne, 75002',                   price:'N/A', rating:4.7, reviews:124,  remark:'',                marco:false, veg:false, maps:'https://maps.app.goo.gl/D22vgJsLFmCzMcsK7', lat:48.8647939, lng:2.3472238 },
+  { name:'Early Bird Coffee',          cat:'cafe', address:"Marché Beauvau, Pl. d'Aligre, 75012",       price:'N/A', rating:4.6, reviews:156,  remark:'',                marco:false, veg:false, maps:'https://maps.app.goo.gl/M5HFeMwtoBpziM7y9', lat:48.8490682, lng:2.3777730 },
+  { name:"Café d'Auteur",              cat:'cafe', address:'39 Rue Mazarine, 75006',                     price:'N/A', rating:4.6, reviews:1035, remark:'Specialty Coffee', marco:false, veg:false, maps:'https://maps.app.goo.gl/DFdNp3W6RTiXhBry9', lat:48.8542334, lng:2.3382313 },
+  { name:'The Coffee',                 cat:'cafe', address:'77 Rue du Cardinal Lemoine, 75005',          price:'N/A', rating:4.8, reviews:1144, remark:'',                marco:false, veg:false, maps:'https://maps.app.goo.gl/pDz8godvoeT2Er6A7', lat:48.8451128, lng:2.3499385 },
+  { name:'Jōhō',                       cat:'cafe', address:'14 Rue des Écouffes, 75004',                 price:'N/A', rating:4.8, reviews:465,  remark:'',                marco:false, veg:false, maps:'https://maps.app.goo.gl/yW5a5XsuvWCJXGFHA', lat:48.8568427, lng:2.3586491 },
+  { name:'ARTESANO',                   cat:'cafe', address:'3 Rue Saint-Paul, 75004',                    price:'N/A', rating:4.5, reviews:322,  remark:'Specialty Roaster',marco:false, veg:false, maps:'https://maps.app.goo.gl/VteDe52tkpSHmcRB7', lat:48.8525676, lng:2.3604660 },
+  { name:'La Grande Épicerie de Paris', cat:'grocery', address:'38 Rue de Sèvres, 75007',                price:'$$',  rating:4.5, reviews:8693, remark:'',              marco:false, veg:false, maps:'https://maps.app.goo.gl/xu4HrNJJYzaCPhSA7', lat:48.8499722, lng:2.3232975 },
+  { name:'G. Detou',                    cat:'grocery', address:'58 Rue Tiquetonne, 75002',               price:'$$',  rating:4.6, reviews:1608, remark:'一切甜點食材',   marco:false, veg:false, maps:'https://maps.app.goo.gl/q91UT7PsCrma88X58', lat:48.8648226, lng:2.3462145 },
+  { name:'Fromagerie Griffon',          cat:'grocery', address:'23bis Av. de la Motte-Picquet, 75007',  price:'N/A', rating:4.6, reviews:102,  remark:'乾酪專門',       marco:false, veg:false, maps:'https://maps.app.goo.gl/WP36mmBVYGKNM9GLA', lat:48.8554020, lng:2.3075211 },
+  { name:'Ardèche à Paris',             cat:'grocery', address:'23 Rue Saint-Paul, 75004',               price:'N/A', rating:5.0, reviews:291,  remark:'',              marco:false, veg:false, maps:'https://maps.app.goo.gl/M42WPQgLBrPHwQcY7', lat:48.8535691, lng:2.3617242 },
+  { name:'Hôtel Le Senat',  cat:'hotel', address:'53 Rue de Vaugirard, 75006', price:'N/A', rating:null, reviews:null, remark:'客人住宿 — 近 Jardin du Luxembourg', marco:false, veg:false, maps:'https://maps.google.com/?q=Hotel+Le+Senat+Paris', lat:48.8475276, lng:2.3287540 },
+  { name:'24 Rue Mouffetard', cat:'hotel', address:'24 Rue Mouffetard, 75005', price:'N/A', rating:null, reviews:null, remark:'客人住宿 — Mouffetard 街區',          marco:false, veg:false, maps:'https://maps.google.com/?q=24+Rue+Mouffetard+Paris', lat:48.8441944, lng:2.3492755 },
+];
+
+let activeFilter = 'all';
+let activeGroupMode = 'list';
+function getCuisineLabel(place) { return CUISINE_LABELS[place.name] || CAT_LABELS[place.cat]; }
+places.forEach(place => { place.cuisine = getCuisineLabel(place); });
+const map = L.map('map', { center:[48.858, 2.340], zoom:13, zoomControl:false });
+L.control.zoom({ position:'bottomleft' }).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution:'© OpenStreetMap © CARTO', subdomains:'abcd', maxZoom:20 }).addTo(map);
+const legend = L.control({ position:'bottomright' });
+legend.onAdd = () => {
+  const div = L.DomUtil.create('div', 'legend-box');
+  const safe = Object.entries(CAT_LABELS).map(([k,v]) => {
+    const dotClass = k === 'hotel' ? 'legend-dot-square' : 'legend-dot';
+    return `<div class="legend-item"><div class="${dotClass}" style="background:${COLORS[k]}"></div>${v}</div>`;
+  }).join('');
+  div.innerHTML = DOMPurify.sanitize(safe);
+  return div;
+};
+legend.addTo(map);
+const layerGroups = { restaurant:L.layerGroup(), pastry:L.layerGroup(), cafe:L.layerGroup(), grocery:L.layerGroup(), hotel:L.layerGroup() };
+const markerRefs  = {};
+function makeIcon(cat) {
+  const s = 13;
+  if (cat === 'hotel') {
+    return L.divIcon({ className:'', html:`<div style="width:${s}px;height:${s}px;background:${COLORS[cat]};border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.28);transform:rotate(45deg);"></div>`, iconSize:[s,s], iconAnchor:[s/2,s/2], popupAnchor:[0,-s/2-4] });
+  }
+  return L.divIcon({ className:'', html:`<div style="width:${s}px;height:${s}px;border-radius:50%;background:${COLORS[cat]};border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.22);"></div>`, iconSize:[s,s], iconAnchor:[s/2,s/2], popupAnchor:[0,-s/2-2] });
+}
+places.forEach((p, i) => {
+  const marker = L.marker([p.lat, p.lng], { icon: makeIcon(p.cat) });
+  const badges = (p.marco ? '<span class="marco-badge">Marco\'s Pick</span>' : '') + (p.veg ? '<span class="veg-badge">素食</span>' : '');
+  const rawPopup = `
+    <div class="popup-inner">
+      <div class="popup-tag" style="background:${COLORS[p.cat]}">${CAT_LABELS[p.cat]}</div>
+      <div class="popup-name">${p.name}${badges}</div>
+      <div class="popup-addr">${p.address}</div>
+      <div class="popup-cuisine">${p.cuisine}</div>
+      <div class="popup-meta">
+        ${p.rating ? `<span class="popup-rating">★ ${p.rating}</span><span style="color:#ddd">·</span>` : ''}
+        ${p.price !== 'N/A' ? `<span class="popup-price">${p.price}</span><span style="color:#ddd">·</span>` : ''}
+        ${p.reviews ? `<span class="popup-reviews">${p.reviews.toLocaleString()} 則</span>` : ''}
+      </div>
+      ${p.remark ? `<div class="popup-remark">${p.remark}</div>` : ''}
+      <a href="${p.maps}" target="_blank" rel="noopener noreferrer" class="popup-link">在 Google Maps 查看 →</a>
+    </div>`;
+  marker.bindPopup(DOMPurify.sanitize(rawPopup), { maxWidth:270, minWidth:220 });
+  layerGroups[p.cat].addLayer(marker);
+  markerRefs[i] = { marker, place:p };
+});
+Object.values(layerGroups).forEach(lg => lg.addTo(map));
+function getFilteredPlaces(filter) { return filter === 'all' ? places : places.filter(p => p.cat === filter); }
+function buildPlaceCard(p) {
+  const idx = places.indexOf(p);
+  const badges = (p.marco ? '<span class="marco-badge">Marco\'s Pick</span>' : '') + (p.veg ? '<span class="veg-badge">素食</span>' : '');
+  return `
+    <div class="place-card" data-idx="${idx}">
+      <div class="card-top">
+        <div class="card-name">${p.name}${badges}</div>
+        <div class="cat-tag" style="background:${COLORS[p.cat]}">${CAT_LABELS[p.cat]}</div>
+      </div>
+      <div class="card-address">${p.address}</div>
+      <div class="card-cuisine">${p.cuisine}</div>
+      <div class="card-meta">
+        ${p.rating ? `<span class="card-rating">★ ${p.rating}</span>` : ''}
+        ${p.price !== 'N/A' ? `<span class="card-price">${p.price}</span>` : ''}
+      </div>
+      ${p.remark ? `<div class="card-remark">${p.remark}</div>` : ''}
+    </div>`;
+}
+function renderSidebar(filter) {
+  const filtered = getFilteredPlaces(filter);
+  document.getElementById('sidebar-count').textContent = filtered.length;
+  document.getElementById('sidebar-title').textContent = activeGroupMode === 'cuisine' ? '菜式分組' : '地點';
+  let rawHtml = '';
+  if (activeGroupMode === 'cuisine') {
+    const groups = filtered.reduce((acc, place) => { (acc[place.cuisine] ||= []).push(place); return acc; }, {});
+    const orderedKeys = Object.keys(groups).sort((a, b) => {
+      const ai = CUISINE_ORDER.indexOf(a); const bi = CUISINE_ORDER.indexOf(b);
+      if (ai === -1 && bi === -1) return a.localeCompare(b, 'zh-Hant');
+      if (ai === -1) return 1; if (bi === -1) return -1; return ai - bi;
+    });
+    rawHtml = orderedKeys.map(key => `
+      <section class="group-section">
+        <div class="group-heading">
+          <span class="group-title">${key}</span>
+          <span class="group-subcount">${groups[key].length}</span>
+        </div>
+        ${groups[key].map(buildPlaceCard).join('')}
+      </section>
+    `).join('');
+  } else {
+    rawHtml = filtered.map(buildPlaceCard).join('');
+  }
+  document.getElementById('place-list').innerHTML = DOMPurify.sanitize(rawHtml);
+  document.querySelectorAll('.place-card').forEach(card => { card.addEventListener('click', () => focusPlace(Number(card.dataset.idx))); });
+}
+function focusPlace(idx) {
+  const { marker, place } = markerRefs[idx];
+  map.setView([place.lat, place.lng], 16, { animate:true });
+  setTimeout(() => marker.openPopup(), 300);
+  document.querySelectorAll('.place-card').forEach(c => c.classList.remove('active'));
+  const card = document.querySelector(`.place-card[data-idx="${idx}"]`);
+  if (card) { card.classList.add('active'); card.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+}
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cat = btn.dataset.cat;
+    activeFilter = cat;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    Object.entries(layerGroups).forEach(([c, lg]) => { (cat === 'all' || cat === c) ? map.addLayer(lg) : map.removeLayer(lg); });
+    renderSidebar(cat);
+    if (cat !== 'all') {
+      const pts = places.filter(p => p.cat === cat);
+      if (pts.length) map.fitBounds(L.latLngBounds(pts.map(p => [p.lat, p.lng])), { padding:[60,60], maxZoom:15 });
+    } else {
+      map.setView([48.858, 2.340], 13, { animate:true });
+    }
+  });
+});
+document.querySelectorAll('.group-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    activeGroupMode = btn.dataset.group;
+    document.querySelectorAll('.group-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderSidebar(activeFilter);
+  });
+});
+renderSidebar('all');
+</script>
+</body>
+</html>
