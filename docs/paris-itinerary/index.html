@@ -23,7 +23,6 @@
   --restaurant: #C0392B;
   --pastry: #D4880A;
   --cafe: #16835E;
-  --note: #F4E5D3;
 }
 body {
   font-family: 'Outfit', sans-serif;
@@ -130,18 +129,6 @@ body {
   gap: 16px;
   padding: 14px 0;
 }
-.slot::before {
-  content: "";
-  position: absolute;
-  left: 86px;
-  top: 28px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 2px solid var(--gold);
-  box-shadow: 0 0 0 4px rgba(201,169,110,0.12);
-}
 .time {
   padding-top: 2px;
   font-size: 12px;
@@ -154,25 +141,6 @@ body {
   font-size: 17px;
   line-height: 1.35;
   font-weight: 500;
-}
-.content p {
-  margin-top: 6px;
-  font-size: 14px;
-  color: var(--muted);
-}
-.note {
-  margin-top: 10px;
-  border-left: 3px solid var(--gold);
-  background: var(--note);
-  padding: 12px 14px;
-  border-radius: 8px;
-}
-.note-title {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--subtitle);
-  margin-bottom: 5px;
 }
 .option-grid {
   display: grid;
@@ -269,7 +237,6 @@ body {
   .hero, .day-header, .timeline, .footer { padding-left: 18px; padding-right: 18px; }
   .slot { grid-template-columns: 1fr; gap: 8px; padding-left: 22px; }
   .timeline::before { left: 23px; }
-  .slot::before { left: 17px; top: 20px; }
   .time { padding-top: 0; }
   .option-grid { grid-template-columns: 1fr; }
 }
@@ -288,19 +255,443 @@ body {
       </div>
     </section>
 
-    <section class="day-section"><div class="day-header"><div class="day-label">Day 1</div><div class="day-title">15 April · Wednesday</div><div class="day-meta">4 guests · Arrival day · Saint-Germain opening walk</div></div><div class="timeline"><div class="slot"><div class="time">1:00pm</div><div class="content"><h3>抵達 Gare du Nord，前往酒店 check-in</h3><p>第一日節奏保持輕鬆，以安頓、放低行李、熟悉左岸步行範圍為主。</p></div></div><div class="slot"><div class="time">2:00pm</div><div class="content"><h3>午餐</h3><p class="pending">待定，建議安排在酒店附近，方便調整抵達後體力。</p></div></div><div class="slot"><div class="time">下午</div><div class="content"><h3>Jardin du Luxembourg</h3><p>以花園散步作為第一個巴黎段落，讓行程從寬鬆、漂亮、容易進入狀態的節奏開始。</p></div></div><div class="slot"><div class="time">5:00pm</div><div class="content"><h3>Tea break at Jugetsudo by Maruyama Nori</h3><p>日式茶店藏在 Rue de Seine 一帶，氣氛安靜，適合作為到埗後第一個正式 pause。</p><div class="inline-list"><div class="inline-card"><strong>Jugetsudo by Maruyama Nori</strong>95 Rue de Seine, 75006 Paris · ★ 4.5 · 日本綠茶</div></div></div></div><div class="slot"><div class="time">6:00pm</div><div class="content"><h3>Citypharma / La Grande Épicerie / Saint-Germain 自由遊逛</h3><p>用最舒服嘅方式開始巴黎模式，在藥妝、美食百貨同街道散步之間自由切換，唔需要追時間。</p></div></div><div class="slot"><div class="time">晚餐</div><div class="content"><h3>Saint-Germain dinner options</h3><div class="option-grid"><article class="option-card"><div class="option-label">Option A</div><div class="option-name">Baillotte</div><div class="option-tags"><span class="tag restaurant">法日 Fusion</span><span class="tag">$$</span><span class="tag">★ 4.8</span></div><div class="option-address">16 Rue du Dragon, 75006 Paris</div></article><article class="option-card"><div class="option-label">Option B</div><div class="option-name">La Jacobine</div><div class="option-tags"><span class="tag restaurant">Classic Paris Bistro</span><span class="tag">$$</span><span class="tag">★ 4.6</span></div><div class="option-address">59–61 Rue Saint-André des Arts, 75006 Paris</div></article></div><p class="pending">兩間都在 6 區，晚餐可按當日精神狀態與想食風格作最後決定。</p></div></div></div></section>
+    <section class="day-section">
+      <div class="day-header">
+        <div class="day-label">Day 1</div>
+        <div class="day-title">15 April · Wednesday</div>
+        <div class="day-meta">4 guests · Arrival day · Saint-Germain opening walk</div>
+      </div>
+      <div class="timeline">
+        <div class="slot">
+          <div class="time">1:00pm</div>
+          <div class="content">
+            <h3>抵達 Gare du Nord，前往酒店 check-in</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">2:00pm</div>
+          <div class="content">
+            <h3>午餐</h3>
+            <div class="pending">待定</div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">下午</div>
+          <div class="content">
+            <h3>Jardin du Luxembourg</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">5:00pm</div>
+          <div class="content">
+            <h3>Tea break at Jugetsudo by Maruyama Nori</h3>
+            <div class="inline-list">
+              <div class="inline-card">
+                <strong>Jugetsudo by Maruyama Nori</strong>
+                95 Rue de Seine, 75006 Paris · ★ 4.5 · 日本綠茶
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">6:00pm</div>
+          <div class="content">
+            <h3>Citypharma / La Grande Épicerie / Saint-Germain 自由遊逛</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">晚餐</div>
+          <div class="content">
+            <h3>Saint-Germain dinner options</h3>
+            <div class="option-grid">
+              <article class="option-card">
+                <div class="option-label">Option A</div>
+                <div class="option-name">Baillotte</div>
+                <div class="option-tags">
+                  <span class="tag restaurant">法日 Fusion</span>
+                  <span class="tag">$$</span>
+                  <span class="tag">★ 4.8</span>
+                </div>
+                <div class="option-address">16 Rue du Dragon, 75006 Paris</div>
+              </article>
+              <article class="option-card">
+                <div class="option-label">Option B</div>
+                <div class="option-name">La Jacobine</div>
+                <div class="option-tags">
+                  <span class="tag restaurant">Classic Paris Bistro</span>
+                  <span class="tag">$$</span>
+                  <span class="tag">★ 4.6</span>
+                </div>
+                <div class="option-address">59–61 Rue Saint-André des Arts, 75006 Paris</div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <section class="day-section"><div class="day-header"><div class="day-label">Day 2</div><div class="day-title">16 April · Thursday</div><div class="day-meta">3 guests · Jia-Min on class · Local market and canal day</div></div><div class="timeline"><div class="slot"><div class="time">早上</div><div class="content"><h3>酒店早餐</h3></div></div><div class="slot"><div class="time">10:00am</div><div class="content"><h3>Marché couvert Beauvau + Marché d'Aligre</h3><p>巴黎最有生活感的市場段落之一，熟食、蔬果、芝士與街坊節奏全都濃縮在同一個早上。</p><div class="note"><div class="note-title">Scene Note</div>這裡比大型景點更像真正的巴黎日常，適合慢慢逛、邊走邊看，也適合買少量零食當作接下來散步的補給。</div></div></div><div class="slot"><div class="time">上午</div><div class="content"><h3>Rue Crémieux 打卡</h3><p>短短一條彩色小街，適合順路停留，不需要停太久。</p></div></div><div class="slot"><div class="time">午餐</div><div class="content"><h3>12th arrondissement lunch options</h3><div class="option-grid"><article class="option-card"><div class="option-label">Option A</div><div class="option-name">Bistro S</div><div class="option-tags"><span class="tag restaurant">法日 Fusion</span><span class="tag">$$$</span><span class="tag">★ 4.8</span></div><div class="option-address">7 Rue Saint-Nicolas, 75012 Paris</div></article><article class="option-card"><div class="option-label">Option B</div><div class="option-name">TOWA Restaurant</div><div class="option-tags"><span class="tag restaurant">法日 Fusion</span><span class="tag">$$$</span><span class="tag">★ 4.8</span></div><div class="option-address">75 Rue Crozatier, 75012 Paris</div></article></div></div></div><div class="slot"><div class="time">下午</div><div class="content"><h3>Canal Saint-Martin 運河散步 + Rue Beaurepaire 探索</h3><p>從市集節奏轉成運河區的慢拍步調，這一段不用趕景點，而係享受巴黎最舒服的散步感。</p><div class="note"><div class="note-title">Scene Note</div>Canal Saint-Martin 最迷人的不是「要看什麼」，而是沿水面散步時那種不急不趕、店舖與人群自然交錯的城市感。</div></div></div><div class="slot"><div class="time">7:00pm</div><div class="content"><h3>Bateaux-Mouches boarding</h3><p>Pont de l'Alma，準備上船。</p></div></div><div class="slot"><div class="time">8:10pm</div><div class="content"><h3>落船</h3></div></div><div class="slot"><div class="time">晚餐</div><div class="content"><h3>晚餐待定</h3><p class="pending">可視乎坐船後體力與回程區域再決定，不需要在第一稿綁死。</p></div></div></div></section>
+    <section class="day-section">
+      <div class="day-header">
+        <div class="day-label">Day 2</div>
+        <div class="day-title">16 April · Thursday</div>
+        <div class="day-meta">3 guests · Jia-Min on class · Local market and canal day</div>
+      </div>
+      <div class="timeline">
+        <div class="slot">
+          <div class="time">早上</div>
+          <div class="content">
+            <h3>酒店早餐</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">10:00am</div>
+          <div class="content">
+            <h3>Marché couvert Beauvau + Marché d'Aligre</h3>
+            <div class="inline-list">
+              <div class="inline-card">
+                巴黎其中一個最地道的街市，12區本地街坊日常買餸的地方。室外係露天跳蚤市集，有新鮮蔬果、醃製食品、偶爾會找到有趣的古董小物；入到室內的 Beauvau 有質素更高的芝士、熟食、肉舖。整個氛圍好生活化，唔係為遊客而設。
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">上午</div>
+          <div class="content">
+            <h3>Rue Crémieux 打卡</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">午餐</div>
+          <div class="content">
+            <h3>12th arrondissement lunch options</h3>
+            <div class="option-grid">
+              <article class="option-card">
+                <div class="option-label">Option A</div>
+                <div class="option-name">Bistro S</div>
+                <div class="option-tags">
+                  <span class="tag restaurant">法日 Fusion</span>
+                  <span class="tag">$$$</span>
+                  <span class="tag">★ 4.8</span>
+                </div>
+                <div class="option-address">7 Rue Saint-Nicolas, 75012 Paris</div>
+              </article>
+              <article class="option-card">
+                <div class="option-label">Option B</div>
+                <div class="option-name">TOWA Restaurant</div>
+                <div class="option-tags">
+                  <span class="tag restaurant">法日 Fusion</span>
+                  <span class="tag">$$$</span>
+                  <span class="tag">★ 4.8</span>
+                </div>
+                <div class="option-address">75 Rue Crozatier, 75012 Paris</div>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">下午</div>
+          <div class="content">
+            <h3>Canal Saint-Martin 運河散步 + Rue Beaurepaire 探索</h3>
+            <div class="inline-list">
+              <div class="inline-card">
+                Canal St Martin 係10區的一條運河，兩岸種滿大樹，間中有鐵橋同水閘。唔係景點，係巴黎年輕人會喺度坐喺河邊發呆、buy coffee 行吓的地方。沿運河一帶有唔少獨立小店同 cafe，Rue Beaurepaire 尤其多有質感的選物店。整體氣氛係悠閒、有點文青。
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">7:00pm</div>
+          <div class="content">
+            <h3>Bateaux-Mouches boarding</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">8:10pm</div>
+          <div class="content">
+            <h3>落船</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">晚餐</div>
+          <div class="content">
+            <h3>晚餐待定</h3>
+            <div class="pending">待定</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <section class="day-section"><div class="day-header"><div class="day-label">Day 3</div><div class="day-title">17 April · Friday</div><div class="day-meta">3 guests · Jia-Min on class · Latin Quarter to Le Marais</div></div><div class="timeline"><div class="slot"><div class="time">早上</div><div class="content"><h3>酒店早餐</h3></div></div><div class="slot"><div class="time">上午</div><div class="content"><h3>Panthéon → Notre-Dame</h3><p>由 5 區走向 4 區，將古典巴黎的厚重感一路過渡到河岸與島區的開闊視野。</p></div></div><div class="slot"><div class="time">午餐</div><div class="content"><h3>PHO 14 Opéra</h3><p>簡單俐落的越南午餐，位置方便，適合作為中段補給。</p><div class="inline-list"><div class="inline-card"><strong>PHO 14 Opéra</strong>17 Rue Molière, 75001 Paris · $ · ★ 4.2</div></div></div></div><div class="slot"><div class="time">下午</div><div class="content"><h3>G. Detou + Tanat Tiquetonne</h3><p>一邊補貨，一邊 coffee stop，這段很適合喜歡食材、甜點與小店的人。</p><div class="note"><div class="note-title">Scene Note</div>G. Detou 幾乎像巴黎烘焙與甜點材料的祕密倉庫，對任何喜歡 pastry 的人來說，都會是一個很容易失守的地方。</div><div class="inline-list"><div class="inline-card"><strong>G. Detou</strong>58 Rue Tiquetonne, 75002 Paris · $$ · ★ 4.6</div><div class="inline-card"><strong>Tanat Tiquetonne</strong>46 Rue Tiquetonne, 75002 Paris · coffee stop · ★ 4.7</div></div></div></div><div class="slot"><div class="time">傍晚</div><div class="content"><h3>Le Marais 探索 / 購物</h3><p>用散步與逛店舖的方式接住下午，讓 Marais 保持彈性，不被過度安排。</p></div></div><div class="slot"><div class="time">Tea time</div><div class="content"><h3>Le Marais sweet stop</h3><div class="option-grid"><article class="option-card"><div class="option-label">Option A</div><div class="option-name">Les Trois Chocolats</div><div class="option-tags"><span class="tag pastry">日系甜點</span><span class="tag">$</span><span class="tag">★ 4.8</span></div><div class="option-address">45 Rue Saint-Paul, 75004 Paris</div></article><article class="option-card"><div class="option-label">Option B</div><div class="option-name">Brigat'</div><div class="option-tags"><span class="tag pastry">Pastry</span><span class="tag">$</span><span class="tag">★ 4.8</span></div><div class="option-address">6 Rue du Pas de la Mule, 75003 Paris</div></article></div></div></div><div class="slot"><div class="time">晚餐</div><div class="content"><h3>Le Marais dinner options</h3><div class="option-grid"><article class="option-card"><div class="option-label">Option A</div><div class="option-name">JJ Beaumarchais</div><div class="option-tags"><span class="tag restaurant">Vegetarian Top Pick</span><span class="tag">$$</span><span class="tag">★ 4.8</span></div><div class="option-address">92 Bd Beaumarchais, 75011 Paris</div></article><article class="option-card"><div class="option-label">Option B</div><div class="option-name">Les Enfants Rouges</div><div class="option-tags"><span class="tag restaurant">法日 Fusion</span><span class="tag">$$</span><span class="tag">★ 4.5</span></div><div class="option-address">9 Rue de Beauce, 75003 Paris</div></article></div><p class="pending">建議與 Day 2 晚餐的風格錯開，令整體行程食嘢層次更平衡。</p></div></div></div></section>
+    <section class="day-section">
+      <div class="day-header">
+        <div class="day-label">Day 3</div>
+        <div class="day-title">17 April · Friday</div>
+        <div class="day-meta">3 guests · Jia-Min on class · Latin Quarter to Le Marais</div>
+      </div>
+      <div class="timeline">
+        <div class="slot">
+          <div class="time">早上</div>
+          <div class="content">
+            <h3>酒店早餐</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">上午</div>
+          <div class="content">
+            <h3>Panthéon → Notre-Dame</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">午餐</div>
+          <div class="content">
+            <h3>PHO 14 Opéra</h3>
+            <div class="inline-list">
+              <div class="inline-card">
+                <strong>PHO 14 Opéra</strong>
+                17 Rue Molière, 75001 Paris · $ · ★ 4.2
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">下午</div>
+          <div class="content">
+            <h3>G. Detou + Tanat Tiquetonne</h3>
+            <div class="inline-list">
+              <div class="inline-card">
+                <strong>G. Detou</strong>
+                一間開了幾十年的老派食材店，不是賣給遊客的那種。入面堆滿了頂級朱古力、果醬、candied fruit、各種法國師傅級烘焙材料，Parisian 甜點師傅同家庭烘焙愛好者都係度入貨。
+              </div>
+              <div class="inline-card">
+                <strong>Tanat</strong>
+                巴黎近年口碑很好的 specialty coffee 品牌。
+              </div>
+              <div class="inline-card">
+                <strong>G. Detou</strong>
+                58 Rue Tiquetonne, 75002 Paris · $$ · ★ 4.6
+              </div>
+              <div class="inline-card">
+                <strong>Tanat Tiquetonne</strong>
+                46 Rue Tiquetonne, 75002 Paris · coffee stop · ★ 4.7
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">傍晚</div>
+          <div class="content">
+            <h3>Le Marais 探索 / 購物</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">Tea time</div>
+          <div class="content">
+            <h3>Le Marais sweet stop</h3>
+            <div class="option-grid">
+              <article class="option-card">
+                <div class="option-label">Option A</div>
+                <div class="option-name">Les Trois Chocolats</div>
+                <div class="option-tags">
+                  <span class="tag pastry">日系甜點</span>
+                  <span class="tag">$</span>
+                  <span class="tag">★ 4.8</span>
+                </div>
+                <div class="option-address">45 Rue Saint-Paul, 75004 Paris</div>
+              </article>
+              <article class="option-card">
+                <div class="option-label">Option B</div>
+                <div class="option-name">Brigat'</div>
+                <div class="option-tags">
+                  <span class="tag pastry">Pastry</span>
+                  <span class="tag">$</span>
+                  <span class="tag">★ 4.8</span>
+                </div>
+                <div class="option-address">6 Rue du Pas de la Mule, 75003 Paris</div>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">晚餐</div>
+          <div class="content">
+            <h3>Le Marais dinner options</h3>
+            <div class="option-grid">
+              <article class="option-card">
+                <div class="option-label">Option A</div>
+                <div class="option-name">JJ Beaumarchais</div>
+                <div class="option-tags">
+                  <span class="tag restaurant">Vegetarian Top Pick</span>
+                  <span class="tag">$$</span>
+                  <span class="tag">★ 4.8</span>
+                </div>
+                <div class="option-address">92 Bd Beaumarchais, 75011 Paris</div>
+              </article>
+              <article class="option-card">
+                <div class="option-label">Option B</div>
+                <div class="option-name">Les Enfants Rouges</div>
+                <div class="option-tags">
+                  <span class="tag restaurant">法日 Fusion</span>
+                  <span class="tag">$$</span>
+                  <span class="tag">★ 4.5</span>
+                </div>
+                <div class="option-address">9 Rue de Beauce, 75003 Paris</div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <section class="day-section"><div class="day-header"><div class="day-label">Day 4</div><div class="day-title">18 April · Saturday</div><div class="day-meta">4 guests · Versailles day trip</div></div><div class="timeline"><div class="slot"><div class="time">全日</div><div class="content"><h3>Versailles Cut-the-Queue Tour</h3><p>集中火力給宮殿、花園與交通安排，這天不再塞太多巴黎市內內容，留白反而令整體更高級。</p></div></div><div class="slot"><div class="time">晚餐</div><div class="content"><h3>Vegetarian-friendly dinner options</h3><div class="option-grid"><article class="option-card"><div class="option-label">Option A</div><div class="option-name">Maslow 1er</div><div class="option-tags"><span class="tag restaurant">Vegetarian Top Pick</span><span class="tag">$$</span><span class="tag">★ 4.9</span></div><div class="option-address">14 Quai de la Mégisserie, 75001 Paris</div></article><article class="option-card"><div class="option-label">Option B</div><div class="option-name">Faubourg Daimant</div><div class="option-tags"><span class="tag restaurant">Vegetarian Top Pick</span><span class="tag">$$</span><span class="tag">★ 4.6</span></div><div class="option-address">20 Rue du Faubourg Poissonnière, 75010 Paris</div></article></div><p class="pending">這一晚的選擇會直接影響 Day 5 晚餐，建議兩晚不要重覆同一路線的 vegetarian style。</p></div></div></div></section>
+    <section class="day-section">
+      <div class="day-header">
+        <div class="day-label">Day 4</div>
+        <div class="day-title">18 April · Saturday</div>
+        <div class="day-meta">4 guests · Versailles day trip</div>
+      </div>
+      <div class="timeline">
+        <div class="slot">
+          <div class="time">全日</div>
+          <div class="content">
+            <h3>Versailles Cut-the-Queue Tour</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">晚餐</div>
+          <div class="content">
+            <h3>Vegetarian-friendly dinner options</h3>
+            <div class="option-grid">
+              <article class="option-card">
+                <div class="option-label">Option A</div>
+                <div class="option-name">Maslow 1er</div>
+                <div class="option-tags">
+                  <span class="tag restaurant">Vegetarian Top Pick</span>
+                  <span class="tag">$$</span>
+                  <span class="tag">★ 4.9</span>
+                </div>
+                <div class="option-address">14 Quai de la Mégisserie, 75001 Paris</div>
+              </article>
+              <article class="option-card">
+                <div class="option-label">Option B</div>
+                <div class="option-name">Faubourg Daimant</div>
+                <div class="option-tags">
+                  <span class="tag restaurant">Vegetarian Top Pick</span>
+                  <span class="tag">$$</span>
+                  <span class="tag">★ 4.6</span>
+                </div>
+                <div class="option-address">20 Rue du Faubourg Poissonnière, 75010 Paris</div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <section class="day-section"><div class="day-header"><div class="day-label">Day 5</div><div class="day-title">19 April · Sunday</div><div class="day-meta">4 guests · Eiffel route and afternoon tea</div></div><div class="timeline"><div class="slot"><div class="time">早上</div><div class="content"><h3>酒店早餐 / 街邊 Pastry</h3></div></div><div class="slot"><div class="time">上午</div><div class="content"><h3>Champ de Mars → Pont de Bir-Hakeim → Esplanade Joseph-Wresinski</h3><p>這條路線把最經典與最有電影感的鐵塔視角串起來，從草地、橋位到對岸空間，畫面層次很完整。</p><div class="note"><div class="note-title">Scene Note</div>如果想拍得靚，這段路線比單點停留更好，因為鐵塔會隨步行角度慢慢展開，特別適合留一段完整的拍照時間。</div></div></div><div class="slot"><div class="time">午餐</div><div class="content"><h3>午餐</h3><p class="pending">7 / 8 區一帶待定，需要有素食選項給 Jia-Min。</p></div></div><div class="slot"><div class="time">下午</div><div class="content"><h3>Arc de Triomphe</h3><p class="pending">上頂或只做外圍打卡仍待確認，這個決定會影響整個下午的節奏。</p></div></div><div class="slot"><div class="time">4:00pm</div><div class="content"><h3>Le Burgundy Afternoon Tea</h3><p>把這天下午收在較精緻、坐得舒服的段落，令鐵塔路線之後的節奏自然降下來。</p><div class="inline-list"><div class="inline-card"><strong>Le Burgundy Paris</strong>6–8 Rue Duphot, 75001 Paris · $$$ · ★ 4.6</div></div></div></div><div class="slot"><div class="time">晚餐</div><div class="content"><h3>Vegetarian dinner options</h3><div class="option-grid"><article class="option-card"><div class="option-label">Option A</div><div class="option-name">Faubourg Daimant</div><div class="option-tags"><span class="tag restaurant">Vegetarian Top Pick</span><span class="tag">$$</span><span class="tag">★ 4.6</span></div><div class="option-address">20 Rue du Faubourg Poissonnière, 75010 Paris</div></article><article class="option-card"><div class="option-label">Option B</div><div class="option-name">Maslow Temple</div><div class="option-tags"><span class="tag restaurant">Vegetarian Friendly Pick</span><span class="tag">$$</span><span class="tag">★ 4.9</span></div><div class="option-address">32 Rue de Picardie, 75003 Paris</div></article></div><p class="pending">素食是必須條件，並需與 Day 4 晚餐錯開。</p></div></div></div></section>
+    <section class="day-section">
+      <div class="day-header">
+        <div class="day-label">Day 5</div>
+        <div class="day-title">19 April · Sunday</div>
+        <div class="day-meta">4 guests · Eiffel route and afternoon tea</div>
+      </div>
+      <div class="timeline">
+        <div class="slot">
+          <div class="time">早上</div>
+          <div class="content">
+            <h3>酒店早餐 / 街邊 Pastry</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">上午</div>
+          <div class="content">
+            <h3>Champ de Mars → Pont de Bir-Hakeim → Esplanade Joseph-Wresinski</h3>
+            <div class="inline-list">
+              <div class="inline-card">
+                幾個以鐵塔做背景的經典打卡位。Pont de Bir-Hakeim 係電影《Interstellar》的取景地，橋上有獨特的雙層結構，鐵塔背景加上橋身線條，係巴黎少有的電影感打卡位。Esplanade Joseph-Wresinski 則係可以正面看到整支鐵塔、同時有草地前景的開揚角度。
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">午餐</div>
+          <div class="content">
+            <h3>午餐</h3>
+            <div class="pending">待定</div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">下午</div>
+          <div class="content">
+            <h3>Arc de Triomphe</h3>
+            <div class="pending">待定</div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">4:00pm</div>
+          <div class="content">
+            <h3>Le Burgundy Afternoon Tea</h3>
+            <div class="inline-list">
+              <div class="inline-card">
+                <strong>Le Burgundy Paris</strong>
+                6–8 Rue Duphot, 75001 Paris · $$$ · ★ 4.6
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">晚餐</div>
+          <div class="content">
+            <h3>Vegetarian dinner options</h3>
+            <div class="option-grid">
+              <article class="option-card">
+                <div class="option-label">Option A</div>
+                <div class="option-name">Faubourg Daimant</div>
+                <div class="option-tags">
+                  <span class="tag restaurant">Vegetarian Top Pick</span>
+                  <span class="tag">$$</span>
+                  <span class="tag">★ 4.6</span>
+                </div>
+                <div class="option-address">20 Rue du Faubourg Poissonnière, 75010 Paris</div>
+              </article>
+              <article class="option-card">
+                <div class="option-label">Option B</div>
+                <div class="option-name">Maslow Temple</div>
+                <div class="option-tags">
+                  <span class="tag restaurant">Vegetarian Friendly Pick</span>
+                  <span class="tag">$$</span>
+                  <span class="tag">★ 4.9</span>
+                </div>
+                <div class="option-address">32 Rue de Picardie, 75003 Paris</div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <section class="day-section"><div class="day-header"><div class="day-label">Day 6</div><div class="day-title">20 April · Monday</div><div class="day-meta">4 guests · Final shopping and departure</div></div><div class="timeline"><div class="slot"><div class="time">早上</div><div class="content"><h3>Saint-Germain 最後手信購物</h3><p>留一個乾淨的最後早上給補買手信與最後散步，讓巴黎收尾保持從容，而不是狼狽趕車。</p></div></div><div class="slot"><div class="time">1:00pm</div><div class="content"><h3>Eurostar 出發</h3></div></div></div></section>
+    <section class="day-section">
+      <div class="day-header">
+        <div class="day-label">Day 6</div>
+        <div class="day-title">20 April · Monday</div>
+        <div class="day-meta">4 guests · Final shopping and departure</div>
+      </div>
+      <div class="timeline">
+        <div class="slot">
+          <div class="time">早上</div>
+          <div class="content">
+            <h3>Saint-Germain 最後手信購物</h3>
+          </div>
+        </div>
+        <div class="slot">
+          <div class="time">1:00pm</div>
+          <div class="content">
+            <h3>Eurostar 出發</h3>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <footer class="footer"><div class="draft">First Draft</div><p>此版本主要用來確認節奏、用餐選擇與待定位置，之後可再按客人回覆微調細節。</p><div class="brandline">Unknown Chapter</div></footer>
+    <footer class="footer">
+      <div class="draft">First Draft</div>
+      <div class="brandline">Unknown Chapter</div>
+    </footer>
   </main>
 </body>
 </html>
