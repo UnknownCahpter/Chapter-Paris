@@ -125,7 +125,7 @@ body {
 .timeline::before {
   content: "";
   position: absolute;
-  left: 92px;
+  left: 126px;
   top: 22px;
   bottom: 22px;
   width: 1px;
@@ -134,17 +134,20 @@ body {
 .slot {
   position: relative;
   display: grid;
-  grid-template-columns: 74px 1fr;
+  grid-template-columns: 108px 1fr;
   gap: 16px;
   padding: 14px 0;
 }
 .time {
   padding-top: 2px;
+  padding-right: 8px;
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--subtitle);
   font-weight: 600;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .content h3 {
   font-size: 17px;
