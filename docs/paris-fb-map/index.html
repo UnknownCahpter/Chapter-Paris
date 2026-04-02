@@ -75,8 +75,11 @@ body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--
 .popup-reviews { color: #bbb; font-size: 10px; }
 .popup-cuisine { display: inline-flex; margin-bottom: 8px; padding: 3px 8px; border-radius: 999px; background: #FBF4E7; border: 1px solid #F0E2C5; color: #7E6841; font-size: 10px; font-weight: 600; }
 .popup-remark  { font-size: 10.5px; color: #B8914A; margin-bottom: 10px; font-style: italic; }
+.popup-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .popup-link { display: inline-block; padding: 7px 13px; background: var(--dark); color: white !important; border-radius: 8px; font-size: 11px; font-weight: 500; text-decoration: none; font-family: 'Inter', sans-serif; }
 .popup-link:hover { background: #333; }
+.popup-link.secondary { background: white; color: var(--dark) !important; border: 1px solid var(--border); }
+.popup-link.secondary:hover { background: #F5F0E8; }
 
 .legend-box { background: white; padding: 10px 14px; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); font-family: 'Inter', sans-serif; font-size: 11px; line-height: 1.8; }
 .legend-item { display: flex; align-items: center; gap: 8px; color: #444; }
@@ -157,6 +160,7 @@ const CUISINE_LABELS = {
   'Daimant Saint-Honoré': 'Vegetarian / Vegan',
   'Le Petit Bal Perdu': 'French',
   'narro': 'French',
+  "Le Relais de Venise - L'Entrecôte": 'French',
   'Le Burgundy Paris': 'Afternoon Tea',
   'Des Gâteaux et du Pain': 'Bakery / Pastry',
   'Jacques Genin': 'Chocolate / Desserts',
@@ -185,6 +189,47 @@ const CUISINE_LABELS = {
   '24 Rue Mouffetard': 'Stay'
 };
 
+const CSV_UPDATES_BY_MAPS = {
+  'https://maps.app.goo.gl/bbRFqRpGx5WmPm4e7': { website:'https://www.kodawari-ramen.com/', reviews:16099 },
+  'https://maps.app.goo.gl/phoK5nisZAWmjmik7': { website:'https://lajacobine.fr/' },
+  'https://maps.app.goo.gl/NMFRhd4yaDmAzrHY7': { website:'https://www.restaurantbaillotte.fr/' },
+  'https://maps.app.goo.gl/1RdXtP6YqMfxCXJN7': { website:'https://www.anicia-paris.com/', reviews:1328 },
+  'https://maps.app.goo.gl/8ZmYvWfb94nwQqux8': { website:'http://www.midi12.com/', reviews:498 },
+  'https://maps.app.goo.gl/b5L4cZKbkNAW4Bgu6': { website:'http://lamijean.fr/' },
+  'https://maps.app.goo.gl/2trnLQn5dgwUrvRy6': { website:'http://lepotagerdumarais.website/' },
+  'https://maps.app.goo.gl/AU2VegZfe8dsta9bA': { website:'https://maslow-restaurants.com/', reviews:17399 },
+  'https://maps.app.goo.gl/yfuvQCeUhm1TAcBk9': { website:'http://www.laregalade.paris/', reviews:1135 },
+  'https://maps.app.goo.gl/XGtw2ehymZzJkosd6': { website:'https://www.daimant.co/faubourg-daimant.html', reviews:4041 },
+  'https://maps.app.goo.gl/Mq6YjjxrhnHmpKzs6': { website:'https://les-enfants-rouges-paris.fr/fr' },
+  'https://maps.app.goo.gl/XzF1HyDewvrGBx669': { website:'https://maslow-restaurants.com/', reviews:6439 },
+  'https://maps.app.goo.gl/79YPE1B6PWTRYGYE9': { website:'http://jjbeaumarchais.com/', reviews:1298 },
+  'https://maps.app.goo.gl/Py8C6ffpkNjm1Bia6': { website:'https://www.bistros.fr/' },
+  'https://maps.app.goo.gl/9k7apVYuiqHhjttb8': { website:'https://www.towarestaurantparis.fr/' },
+  'https://maps.app.goo.gl/uoR6uBYfTkgMC7Uu8': { website:'http://www.petitnuageparis.fr/', reviews:1125 },
+  'https://maps.app.goo.gl/jLwoCMyQdNsAoDYW6': { website:'https://www.castaniu-family.fr/bistro-poni-paris-9/', reviews:3406 },
+  'https://maps.app.goo.gl/gfsGhnES9627': { website:'https://abuela.fr/', reviews:1723 },
+  'https://maps.app.goo.gl/TjZc6hoWRAZSzHbU7': { website:'http://viaemilia.fr/' },
+  'https://maps.app.goo.gl/rZuZts1JhzkDgihe7': { website:'https://www.enniudon.com/' },
+  'https://maps.app.goo.gl/A5BTf73XcdmSkTLr6': { website:'https://pho14paris.fr/opera' },
+  'https://maps.app.goo.gl/ov2e49nd8Yb4DpGS6': { website:'https://bombanceparis.fr/' },
+  'https://maps.app.goo.gl/mKopBQGaM9yarwq17': { website:'https://www.daimant.co/daimant-saint-honore.html' },
+  'https://maps.app.goo.gl/P1wk2msgbTpzrmwV7': { website:'https://www.lepetitbalperdu.com/' },
+  'https://maps.app.goo.gl/C4W2dCW7e6PTr61Z8': { website:'https://www.restaurantnarro.fr/' },
+  'https://maps.app.goo.gl/GqrbrSN7KhS5UkUj6': { website:'http://www.relaisdevenise.com/' },
+  'https://maps.app.goo.gl/TU9PKWd2J83LV3Y77': { website:'http://www.leburgundy.com/', reviews:812 },
+  'https://maps.app.goo.gl/JDuzvA3xY6pshPmH9': { website:'http://www.desgateauxetdupain.com/' },
+  'https://maps.app.goo.gl/beaCNogB2LGSfkkW7': { website:'http://jacquesgenin.fr/' },
+  'https://maps.app.goo.gl/7gVbGvmXUADfuyz37': { website:'https://www.plaqchocolat.com/', reviews:681 },
+  'https://maps.app.goo.gl/9hmuwrwuFx4PyQRc7': { reviews:4992 },
+  'https://maps.app.goo.gl/dzgSS8NgfKLPr3BE6': { website:'https://www.wearereys.com/' },
+  'https://maps.app.goo.gl/tBHgyCEuFLczqwqH6': { website:'http://www.les3chocolats.paris/' },
+  'https://maps.app.goo.gl/C7rDCP2EP5ZsYSVk8': { website:'http://brigat.paris/', reviews:1105 },
+  'https://maps.app.goo.gl/hE4y3QL6PDpKa5Hk8': { website:'https://boulangerieutopie.com/', reviews:4059 },
+  'https://maps.app.goo.gl/M4CXTUWa6A2tFhQX9': { website:'http://www.patrickroger.com/', reviews:748 },
+  'https://maps.app.goo.gl/T9mNLzG18FCdjSpK6': { website:'https://lapatisseriecyrillignac.com/fr/', reviews:3380 },
+  'https://maps.app.goo.gl/Pp2rBHfMbgHnc77a8': {}
+};
+
 const places = [
   // ── RESTAURANT ──
   { name:'Kodawari Ramen (Yokochō)',  cat:'restaurant', address:'29 Rue Mazarine, 75006',                     price:'$',   rating:4.5, reviews:16096, remark:'Immersive ramen counter setting', marco:false, veg:false, maps:'https://maps.app.goo.gl/bbRFqRpGx5WmPm4e7', lat:48.8546421, lng:2.3380705 },
@@ -208,10 +253,11 @@ const places = [
   { name:'VIA EMILIA',                cat:'restaurant', address:'22 Rue la Bruyère, 75009',                    price:'$$',  rating:4.9, reviews:782,   remark:'Italian',       marco:false, veg:false, maps:'https://maps.app.goo.gl/TjZc6hoWRAZSzHbU7', lat:48.8793160, lng:2.3351287 },
   { name:'Enni Udon',                 cat:'restaurant', address:'6 Rue de la Renaissance, 75008',              price:'$$',  rating:4.6, reviews:898,   remark:'Japanese udon',       marco:false, veg:false, maps:'https://maps.app.goo.gl/rZuZts1JhzkDgihe7', lat:48.8674486, lng:2.3026997 },
   { name:'Phở Bánh Cuốn 14 (PHO 14 Opéra)', cat:'restaurant', address:'17 Rue Molière, 75001',                price:'$',   rating:4.2, reviews:2163,  remark:'Vietnamese pho',       marco:false, veg:false, maps:'https://maps.app.goo.gl/A5BTf73XcdmSkTLr6', lat:48.8652723, lng:2.3360503 },
-  { name:'Bombance',                  cat:'restaurant', address:'40 Rue des Blancs Manteaux, 75004',           price:'$$',  rating:4.8, reviews:966,   remark:'',               marco:false, veg:false, maps:'https://maps.app.goo.gl/ov2e49nd8Yb4DpGS6', lat:48.8597890, lng:2.3550130 },
-  { name:'Daimant Saint-Honoré',      cat:'restaurant', address:'24 Pl. du Marché Saint-Honoré, 75001',       price:'$$',  rating:4.8, reviews:1167,  remark:'Vegetarian top pick', marco:false, veg:true, maps:'https://maps.app.goo.gl/mKopBQGaM9yarwq17', lat:48.8664520, lng:2.3320140 },
-  { name:'Le Petit Bal Perdu',        cat:'restaurant', address:'32 Rue Tournefort, 75005',                    price:'$$',  rating:4.7, reviews:568,   remark:'',               marco:false, veg:false, maps:'https://maps.app.goo.gl/P1wk2msgbTpzrmwV7', lat:48.8420620, lng:2.3481540 },
-  { name:'narro',                     cat:'restaurant', address:'72 Rue du Cardinal Lemoine, 75005',           price:'$$',  rating:4.6, reviews:882,   remark:'',               marco:false, veg:false, maps:'https://maps.app.goo.gl/C4W2dCW7e6PTr61Z8', lat:48.8449190, lng:2.3496390 },
+  { name:'Bombance',                  cat:'restaurant', address:'40 Rue des Blancs Manteaux, 75004',           price:'$$$', rating:4.8, reviews:966,   remark:'',               marco:false, veg:false, maps:'https://maps.app.goo.gl/ov2e49nd8Yb4DpGS6', lat:48.8597798, lng:2.3550796 },
+  { name:'Daimant Saint-Honoré',      cat:'restaurant', address:'24 Pl. du Marché Saint-Honoré, 75001',        price:'$$$', rating:4.8, reviews:1167,  remark:'Vegetarian top pick', marco:false, veg:true,  maps:'https://maps.app.goo.gl/mKopBQGaM9yarwq17', lat:48.8664314, lng:2.3321146 },
+  { name:'Le Petit Bal Perdu',        cat:'restaurant', address:'32 Rue Tournefort, 75005',                    price:'$$',  rating:4.7, reviews:568,   remark:'',               marco:false, veg:false, maps:'https://maps.app.goo.gl/P1wk2msgbTpzrmwV7', lat:48.8420416, lng:2.3481244 },
+  { name:'narro',                     cat:'restaurant', address:'72 Rue du Cardinal Lemoine, 75005',           price:'$$',  rating:4.6, reviews:882,   remark:'',               marco:false, veg:false, maps:'https://maps.app.goo.gl/C4W2dCW7e6PTr61Z8', lat:48.8449342, lng:2.3495977 },
+  { name:"Le Relais de Venise - L'Entrecôte", cat:'restaurant', address:'271 Bd Pereire, 75017',               price:'$$$', rating:4.1, reviews:2831,  remark:'',               marco:false, veg:false, maps:'https://maps.app.goo.gl/GqrbrSN7KhS5UkUj6', lat:48.8780453, lng:2.2851586 },
 
   // ── PASTRY / DESSERT ──
   { name:'Le Burgundy Paris',         cat:'pastry', address:'6-8 Rue Duphot, 75001',                           price:'$$$', rating:4.6, reviews:812,   remark:'Luxury hotel afternoon tea', marco:false, veg:false, maps:'https://maps.app.goo.gl/TU9PKWd2J83LV3Y77', lat:48.8682607, lng:2.3256161 },
@@ -225,7 +271,7 @@ const places = [
   { name:'Boulangerie Utopie',         cat:'pastry', address:'20 Rue Jean-Pierre Timbaud, 75011',           price:'$',   rating:4.4, reviews:4057,  remark:'',                      marco:false, veg:false, maps:'https://maps.app.goo.gl/hE4y3QL6PDpKa5Hk8', lat:48.8653444, lng:2.3686168 },
   { name:'Patrick Roger',              cat:'pastry', address:'108 Bd Saint-Germain, 75006',                 price:'$$',  rating:4.4, reviews:747,   remark:'Chocolate specialist',                marco:true,  veg:false, maps:'https://maps.app.goo.gl/M4CXTUWa6A2tFhQX9', lat:48.8518421, lng:2.3420444 },
   { name:'La Pâtisserie Cyril Lignac', cat:'pastry', address:'2 Rue de Chaillot, 75116',                    price:'$',   rating:4.4, reviews:3379,  remark:'Especially known for kouign-amann',     marco:false, veg:false, maps:'https://maps.app.goo.gl/T9mNLzG18FCdjSpK6', lat:48.8665994, lng:2.2968236 },
-  { name:'Maison Bergeron',            cat:'pastry', address:'112 Rue Saint-Dominique, 75007',              price:'$',   rating:4.6, reviews:1568,  remark:'',                      marco:false, veg:false, maps:'https://maps.app.goo.gl/Pp2rBHfMbgHnc77a8', lat:48.8584770, lng:2.3022110 },
+  { name:'Maison Bergeron',            cat:'pastry', address:'112 Rue Saint-Dominique, 75007',              price:'$',   rating:4.6, reviews:1568,  remark:'',                      marco:false, veg:false, maps:'https://maps.app.goo.gl/Pp2rBHfMbgHnc77a8', lat:48.8584943, lng:2.3022762 },
 
   // ── CAFÉ / BEVERAGE ──
   { name:'Jugetsudo by Maruyama Nori', cat:'cafe', address:'95 Rue de Seine, 75006',                     price:'N/A', rating:4.5, reviews:235,  remark:'Japanese green tea',        marco:false, veg:false, maps:'https://maps.app.goo.gl/3yPiJDQL8Dhtzj1b6', lat:48.8519165, lng:2.3371278 },
@@ -247,6 +293,10 @@ const places = [
   { name:'Hôtel Le Senat',  cat:'hotel', address:'53 Rue de Vaugirard, 75006', price:'N/A', rating:null, reviews:null, remark:'Guest stay near Jardin du Luxembourg', marco:false, veg:false, maps:'https://maps.google.com/?q=Hotel+Le+Senat+Paris', lat:48.8475276, lng:2.3287540 },
   { name:'24 Rue Mouffetard', cat:'hotel', address:'24 Rue Mouffetard, 75005', price:'N/A', rating:null, reviews:null, remark:'Guest stay in the Mouffetard quarter',          marco:false, veg:false, maps:'https://maps.google.com/?q=24+Rue+Mouffetard+Paris', lat:48.8441944, lng:2.3492755 },
 ];
+
+places.forEach(place => {
+  Object.assign(place, CSV_UPDATES_BY_MAPS[place.maps] || {});
+});
 
 let activeFilter = 'all';
 let activeGroupMode = 'list';
@@ -317,7 +367,10 @@ places.forEach((p, i) => {
         ${p.reviews ? `<span class="popup-reviews">${p.reviews.toLocaleString()} reviews</span>` : ''}
       </div>
       ${p.remark ? `<div class="popup-remark">${p.remark}</div>` : ''}
-      <a href="${p.maps}" target="_blank" rel="noopener noreferrer" class="popup-link">View on Google Maps →</a>
+      <div class="popup-actions">
+        ${p.website ? `<a href="${p.website}" target="_blank" rel="noopener noreferrer" class="popup-link secondary">Official Website ↗</a>` : ''}
+        <a href="${p.maps}" target="_blank" rel="noopener noreferrer" class="popup-link">View on Google Maps →</a>
+      </div>
     </div>`;
 
   marker.bindPopup(DOMPurify.sanitize(rawPopup), { maxWidth:270, minWidth:220 });
