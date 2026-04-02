@@ -69,6 +69,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-bottom: 16px;
 }
 .meta-pill {
   border: 1px solid var(--border);
@@ -76,6 +77,14 @@ body {
   padding: 8px 12px;
   background: var(--surface-soft);
   font-size: 12px;
+  color: var(--muted);
+}
+.hero-copy {
+  display: grid;
+  gap: 10px;
+}
+.hero-copy p {
+  font-size: 14px;
   color: var(--muted);
 }
 .day-section {
@@ -141,6 +150,11 @@ body {
   font-size: 17px;
   line-height: 1.35;
   font-weight: 500;
+}
+.content p {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--muted);
 }
 .option-grid {
   display: grid;
@@ -247,11 +261,15 @@ body {
     <section class="hero">
       <div class="brand">Unknown Chapter</div>
       <h1>Chapter Paris</h1>
-      <div class="deck">First Draft Itinerary</div>
+      <div class="deck">A Curated Paris Getaway with Friends</div>
       <div class="hero-meta">
         <div class="meta-pill">15–20 April</div>
         <div class="meta-pill">6 Days in Paris</div>
         <div class="meta-pill">3–4 Guests</div>
+      </div>
+      <div class="hero-copy">
+        <p>As you are travelling from different parts of the world, the plan balances sightseeing, good food, and free time to enjoy Paris and each other's company.</p>
+        <p>The pace is kept easy throughout, with a mix of classic highlights, neighbourhood strolls, and shared moments, so the trip feels enjoyable and memorable from start to finish.</p>
       </div>
     </section>
 
@@ -259,14 +277,14 @@ body {
       <div class="day-header">
         <div class="day-label">Day 1</div>
         <div class="day-title">15 April · Tuesday</div>
-        <div class="day-meta">4 guests · Arrival day · Left Bank tea stop and a relaxed Opéra dinner</div>
+        <div class="day-meta">4 guests</div>
       </div>
       <div class="timeline">
-        <div class="slot"><div class="time">1:00pm</div><div class="content"><h3>Arrive at Gare du Nord and transfer to the hotel for check-in</h3></div></div>
-        <div class="slot"><div class="time">2:30pm</div><div class="content"><h3>Tea break at Jugetsudo by Maruyama Nori</h3><div class="inline-list"><div class="inline-card"><strong>Jugetsudo by Maruyama Nori</strong>95 Rue de Seine, 75006 Paris · ★ 4.5 · Japanese green tea</div></div></div></div>
-        <div class="slot"><div class="time">3:30pm</div><div class="content"><h3>Jardin du Luxembourg</h3></div></div>
-        <div class="slot"><div class="time">5:30pm</div><div class="content"><h3>Stroll through the Little Tokyo pocket around Rue Sainte-Anne</h3></div></div>
-        <div class="slot"><div class="time">6:00pm</div><div class="content"><h3>Dinner at PHO 14 Opéra</h3><div class="inline-list"><div class="inline-card"><strong>PHO 14 Opéra</strong>17 Rue Molière, 75001 Paris · $ · ★ 4.2 · Vietnamese pho</div></div></div></div>
+        <div class="slot"><div class="time">1:00pm</div><div class="content"><h3>Arrival at Gare du Nord, followed by check-in</h3></div></div>
+        <div class="slot"><div class="time">2:30pm</div><div class="content"><h3>Tea at Jugetsudo by Maruyama Nori</h3><div class="inline-list"><div class="inline-card">95 Rue de Seine, 75006</div></div></div></div>
+        <div class="slot"><div class="time">3:30pm</div><div class="content"><h3>A leisurely stroll through the Jardin du Luxembourg</h3><p>A gentle start to the trip and a lovely setting to ease into Paris together.</p></div></div>
+        <div class="slot"><div class="time">5:30pm</div><div class="content"><h3>Optional time to explore the Little Japan quarter around Rue Sainte-Anne</h3></div></div>
+        <div class="slot"><div class="time">6:00pm</div><div class="content"><h3>Dinner at Pho 14 Opéra</h3><p>A relaxed first evening to settle in and enjoy time together.</p></div></div>
       </div>
     </section>
 
@@ -274,16 +292,16 @@ body {
       <div class="day-header">
         <div class="day-label">Day 2</div>
         <div class="day-title">16 April · Wednesday</div>
-        <div class="day-meta">3 guests · Jia-Min in class · Local market morning, canal walk, and an easy Left Bank dinner</div>
+        <div class="day-meta">3 guests · Jia-Min in class</div>
       </div>
       <div class="timeline">
         <div class="slot"><div class="time">Morning</div><div class="content"><h3>Breakfast at the hotel</h3></div></div>
-        <div class="slot"><div class="time">10:00am</div><div class="content"><h3>Marché couvert Beauvau + Marché d'Aligre</h3><div class="inline-list"><div class="inline-card">One of the most authentic market experiences in Paris, this is where the 12th arrondissement still feels entirely local. Outside, the open-air market spills into a lively patchwork of produce, preserves, and the occasional antique find; inside Beauvau, the mood shifts to finer cheeses, charcuterie, and beautifully run specialty stalls. It is wonderfully everyday, and all the better for not being staged for visitors.</div></div></div></div>
-        <div class="slot"><div class="time">Late morning</div><div class="content"><h3>Photo stop on Rue Crémieux</h3></div></div>
-        <div class="slot"><div class="time">Lunch</div><div class="content"><h3>12th arrondissement lunch options</h3><div class="option-grid"><article class="option-card"><div class="option-label">Option A</div><div class="option-name">Bistro S</div><div class="option-tags"><span class="tag restaurant">French-Japanese fusion</span><span class="tag">$$$</span><span class="tag">★ 4.8</span></div><div class="option-address">7 Rue Saint-Nicolas, 75012 Paris</div></article><article class="option-card"><div class="option-label">Option B</div><div class="option-name">TOWA Restaurant</div><div class="option-tags"><span class="tag restaurant">French-Japanese fusion</span><span class="tag">$$$</span><span class="tag">★ 4.8</span></div><div class="option-address">75 Rue Crozatier, 75012 Paris</div></article></div></div></div>
-        <div class="slot"><div class="time">Afternoon</div><div class="content"><h3>Canal Saint-Martin stroll + Rue Beaurepaire</h3><div class="inline-list"><div class="inline-card">More local hangout than landmark, Canal Saint-Martin is where Paris softens into a slower rhythm. The tree-lined water, iron footbridges, and old lock system give the area its quiet character, while the quays attract the kind of easy afternoons that call for coffee, a stroll, and very little agenda. Along the canal, and especially on Rue Beaurepaire, there are plenty of independent shops and cafés with a distinctly understated, creative feel.</div></div></div></div>
-        <div class="slot"><div class="time">5:00–6:00pm</div><div class="content"><h3>Return to the hotel to rest</h3></div></div>
-        <div class="slot"><div class="time">7:00pm</div><div class="content"><h3>6th arrondissement dinner options</h3><div class="option-grid"><article class="option-card"><div class="option-label">Option A</div><div class="option-name">Baillotte</div><div class="option-tags"><span class="tag restaurant">French-Japanese fusion</span><span class="tag">$$</span><span class="tag">★ 4.8</span></div><div class="option-address">16 Rue du Dragon, 75006 Paris</div></article><article class="option-card"><div class="option-label">Option B</div><div class="option-name">La Jacobine</div><div class="option-tags"><span class="tag restaurant">Classic Parisian bistro</span><span class="tag">$$</span><span class="tag">★ 4.6</span></div><div class="option-address">59–61 Rue Saint-André des Arts, 75006 Paris</div></article></div></div></div>
+        <div class="slot"><div class="time">10:00am</div><div class="content"><h3>Visit Marché Couvert Beauvau and Marché d’Aligre</h3><p>12th arrondissement; one of Paris's most authentic local market areas.</p></div></div>
+        <div class="slot"><div class="time">Late morning</div><div class="content"><h3>Photo stop at Rue Crémieux</h3><p>12th arrondissement.</p></div></div>
+        <div class="slot"><div class="time">Lunch</div><div class="content"><h3>Lunch at Bistro S or TOWA Restaurant</h3><div class="option-grid"><article class="option-card"><div class="option-label">Marco's Pick</div><div class="option-name">Bistro S</div><div class="option-tags"><span class="tag restaurant">French-Japanese fusion</span><span class="tag">$$$</span><span class="tag">★ 4.8</span></div><div class="option-address">7 Rue Saint-Nicolas, 75012 Paris</div></article><article class="option-card"><div class="option-label">Alternative</div><div class="option-name">TOWA Restaurant</div><div class="option-tags"><span class="tag restaurant">French-Japanese fusion</span><span class="tag">$$$</span><span class="tag">★ 4.8</span></div><div class="option-address">75 Rue Crozatier, 75012 Paris</div></article></div><p>Both are located in the 12th arrondissement and offer French-Japanese fusion cuisine.</p></div></div>
+        <div class="slot"><div class="time">Afternoon</div><div class="content"><h3>A stroll along Canal Saint-Martin, followed by time to explore Rue Beaurepaire</h3><p>A charming and easygoing part of the city, perfect for wandering together.</p></div></div>
+        <div class="slot"><div class="time">5:00-6:00pm</div><div class="content"><h3>Return to the hotel for a short rest</h3></div></div>
+        <div class="slot"><div class="time">7:00pm</div><div class="content"><h3>Dinner at Baillotte or La Jacobine</h3><p>Both are located in the 6th arrondissement.</p></div></div>
       </div>
     </section>
 
@@ -291,17 +309,17 @@ body {
       <div class="day-header">
         <div class="day-label">Day 3</div>
         <div class="day-title">17 April · Thursday</div>
-        <div class="day-meta">3 guests · Jia-Min in class · Latin Quarter, move-in, and a Seine cruise</div>
+        <div class="day-meta">3 guests · Jia-Min in class</div>
       </div>
       <div class="timeline">
         <div class="slot"><div class="time">Morning</div><div class="content"><h3>Breakfast at the hotel</h3></div></div>
-        <div class="slot"><div class="time">Late morning</div><div class="content"><h3>Panthéon → Notre-Dame</h3></div></div>
-        <div class="slot"><div class="time">Lunch</div><div class="content"><h3>Lunch at your own pace</h3><div class="pending">Flexible depending on the morning route</div></div></div>
-        <div class="slot"><div class="time">Afternoon</div><div class="content"><h3>Citypharma / La Grande Épicerie / Saint-Germain wander</h3></div></div>
-        <div class="slot"><div class="time">3:00pm</div><div class="content"><h3>Check in to the Airbnb at 24 Rue Mouffetard</h3></div></div>
-        <div class="slot"><div class="time">4:30pm</div><div class="content"><h3>Bateaux-Mouches boarding</h3></div></div>
-        <div class="slot"><div class="time">6:00pm</div><div class="content"><h3>Visit G. Detou</h3><div class="inline-list"><div class="inline-card"><strong>G. Detou</strong>An old-school ingredients shop that feels resolutely made for people who genuinely cook and bake. Inside, shelves are packed with exceptional chocolate, confitures, candied fruit, and the kind of pastry ingredients serious Parisian home bakers and professionals quietly rely on.</div><div class="inline-card"><strong>G. Detou</strong>58 Rue Tiquetonne, 75002 Paris · $$ · ★ 4.6</div></div></div></div>
-        <div class="slot"><div class="time">Dinner</div><div class="content"><h3>Maslow 1er</h3><div class="inline-list"><div class="inline-card"><strong>Maslow 1er</strong>14 Quai de la Mégisserie, 75001 Paris · $$ · ★ 4.9 · Vegetarian favourite</div></div></div></div>
+        <div class="slot"><div class="time">Morning</div><div class="content"><h3>Visit the Panthéon, then continue to Notre-Dame</h3><p>From the 5th to the 4th arrondissement.</p></div></div>
+        <div class="slot"><div class="time">Lunch</div><div class="content"><h3>Free time for lunch</h3></div></div>
+        <div class="slot"><div class="time">Early afternoon</div><div class="content"><h3>Enjoy a leisurely afternoon in Saint-Germain, with visits to Citypharma, La Grande Épicerie, and Des Gâteaux et du Pain</h3><p>A relaxed afternoon for browsing, indulgence, and enjoying the Parisian atmosphere together.</p></div></div>
+        <div class="slot"><div class="time">3:00pm</div><div class="content"><h3>Check in to the Airbnb</h3><div class="inline-list"><div class="inline-card">24 Rue Mouffetard</div></div></div></div>
+        <div class="slot"><div class="time">4:30pm</div><div class="content"><h3>Board the Bateaux-Mouches river cruise</h3><p>A lovely shared Paris moment on the Seine.</p></div></div>
+        <div class="slot"><div class="time">6:00pm</div><div class="content"><h3>Visit G. Detou</h3></div></div>
+        <div class="slot"><div class="time">Evening</div><div class="content"><h3>Dinner at Maslow 1er or Daimant Saint-Honoré</h3><p>Maslow 1er is a vegetarian restaurant known for its small plates designed for sharing, while Daimant Saint-Honoré offers a broader vegetarian menu.</p></div></div>
       </div>
     </section>
 
@@ -309,11 +327,11 @@ body {
       <div class="day-header">
         <div class="day-label">Day 4</div>
         <div class="day-title">18 April · Friday</div>
-        <div class="day-meta">4 guests · Versailles day trip</div>
+        <div class="day-meta">4 guests</div>
       </div>
       <div class="timeline">
-        <div class="slot"><div class="time">All day</div><div class="content"><h3>Versailles cut-the-queue tour</h3></div></div>
-        <div class="slot"><div class="time">Dinner</div><div class="content"><h3>Flexible dinner plan</h3><div class="inline-list"><div class="inline-card">Depending on energy levels, this can stay deliberately easy: either a simple prepared dinner back at the apartment or a relaxed walk-in option nearby.</div></div></div></div>
+        <div class="slot"><div class="time">Full day</div><div class="content"><h3>Versailles Cut-the-Queue Tour</h3><p>Includes the Palace, the Gardens, and transport.</p></div></div>
+        <div class="slot"><div class="time">Evening</div><div class="content"><h3>A relaxed dinner at home or at a nearby walk-in restaurant</h3><p>Flexible arrangement; recommended options include Le Petit Bal Perdu or Narro, both French restaurants with vegetarian-friendly choices.</p></div></div>
       </div>
     </section>
 
@@ -321,18 +339,17 @@ body {
       <div class="day-header">
         <div class="day-label">Day 5</div>
         <div class="day-title">19 April · Saturday</div>
-        <div class="day-meta">4 guests · Eiffel Tower route, afternoon tea, and Le Marais in the evening</div>
+        <div class="day-meta">4 guests</div>
       </div>
       <div class="timeline">
-        <div class="slot"><div class="time">Morning</div><div class="content"><h3>Breakfast at the hotel or a neighbourhood pastry stop</h3></div></div>
-        <div class="slot"><div class="time">Late morning</div><div class="content"><h3>Champ de Mars → Pont de Bir-Hakeim → Esplanade Joseph-Wresinski</h3><div class="inline-list"><div class="inline-card">This sequence brings together a few of the most photogenic Eiffel Tower viewpoints in Paris. Pont de Bir-Hakeim, known from <em>Interstellar</em>, has its striking double-level structure and cinematic lines, while Esplanade Joseph-Wresinski offers a broad, open angle with the full tower framed by lawn in the foreground. It is one of the most elegant ways to experience the classic Paris skyline without reducing it to a single stop.</div></div></div></div>
-        <div class="slot"><div class="time">Lunch</div><div class="content"><h3>Enni Udon</h3><div class="inline-list"><div class="inline-card"><strong>Enni Udon</strong>6 Rue de la Renaissance, 75008 Paris · ★ 4.6 · Vegetarian-friendly options available</div></div></div></div>
-        <div class="slot"><div class="time">Afternoon</div><div class="content"><h3>Arc de Triomphe exterior photo stop</h3></div></div>
-        <div class="slot"><div class="time">Afternoon</div><div class="content"><h3>Champs-Élysées</h3></div></div>
-        <div class="slot"><div class="time">4:00pm</div><div class="content"><h3>Le Burgundy afternoon tea</h3><div class="inline-list"><div class="inline-card"><strong>Le Burgundy Paris</strong>6–8 Rue Duphot, 75001 Paris · $$$ · ★ 4.6</div></div></div></div>
-        <div class="slot"><div class="time">Early evening</div><div class="content"><h3>Le Marais for browsing and a gentle evening wander</h3></div></div>
-        <div class="slot"><div class="time">Tea time</div><div class="content"><h3>Les Trois Chocolats / Brigat'</h3></div></div>
-        <div class="slot"><div class="time">Dinner</div><div class="content"><h3>Le Marais dinner options</h3><div class="option-grid"><article class="option-card"><div class="option-label">Option A</div><div class="option-name">Les Enfants Rouges</div><div class="option-tags"><span class="tag restaurant">French-Japanese fusion</span><span class="tag">$$</span><span class="tag">★ 4.5</span></div><div class="option-address">9 Rue de Beauce, 75003 Paris</div></article><article class="option-card"><div class="option-label">Option B</div><div class="option-name">Bombance</div><div class="option-tags"><span class="tag restaurant">To be confirmed</span></div></article><article class="option-card"><div class="option-label">Option C</div><div class="option-name">Le Potager du Marais</div><div class="option-tags"><span class="tag restaurant">Vegetarian</span><span class="tag">$$</span><span class="tag">★ 4.3</span></div><div class="option-address">26 Rue Saint-Paul, 75004 Paris</div></article></div></div></div>
+        <div class="slot"><div class="time">Morning</div><div class="content"><h3>Breakfast at the hotel or pastries on the go</h3></div></div>
+        <div class="slot"><div class="time">Morning</div><div class="content"><h3>Visit Champ de Mars, Pont de Bir-Hakeim, and Esplanade Joseph-Wresinski</h3><p>Excellent Eiffel Tower photo spots, including a location featured in <em>Interstellar</em>.</p></div></div>
+        <div class="slot"><div class="time">Late morning</div><div class="content"><h3>Photo stop at the Arc de Triomphe (exterior only)</h3></div></div>
+        <div class="slot"><div class="time">Lunch</div><div class="content"><h3>Lunch at Enni Udon</h3><p>Vegetarian options available.</p></div></div>
+        <div class="slot"><div class="time">Afternoon</div><div class="content"><h3>Stroll along the Champs-Élysées</h3></div></div>
+        <div class="slot"><div class="time">Late afternoon</div><div class="content"><h3>Explore and shop in Le Marais</h3><p>A wonderful area for wandering, shopping, and making the most of a weekend in Paris together.</p></div></div>
+        <div class="slot"><div class="time">Tea time</div><div class="content"><h3>Tea at Les Trois Chocolats or Brigat'</h3></div></div>
+        <div class="slot"><div class="time">Evening</div><div class="content"><h3>Dinner at Les Enfants Rouges, Bombance, or Le Potager du Marais</h3><p>Le Potager du Marais is a vegetarian restaurant.</p></div></div>
       </div>
     </section>
 
@@ -340,16 +357,17 @@ body {
       <div class="day-header">
         <div class="day-label">Day 6</div>
         <div class="day-title">20 April · Sunday</div>
-        <div class="day-meta">4 guests · Final shopping and departure</div>
+        <div class="day-meta">4 guests</div>
       </div>
       <div class="timeline">
-        <div class="slot"><div class="time">Morning</div><div class="content"><h3>Final Saint-Germain shopping for gifts and last-minute finds</h3></div></div>
-        <div class="slot"><div class="time">1:00pm</div><div class="content"><h3>Depart on Eurostar</h3></div></div>
+        <div class="slot"><div class="time">Morning</div><div class="content"><h3>Check out and store luggage before sightseeing</h3><p>Luggage storage options near Notre-Dame: LOCK &amp; enjoy! - Consignas en Notre Dame, 14 Rue des Bernardins, 75005 Paris, or CITY-LOCKER - Notre-Dame, 6 Rue des Bernardins, 75005 Paris.</p></div></div>
+        <div class="slot"><div class="time">Morning</div><div class="content"><h3>Last-minute souvenir shopping in Saint-Germain</h3><p>A final gentle Paris moment before departure.</p></div></div>
+        <div class="slot"><div class="time">1:00pm</div><div class="content"><h3>Departure by Eurostar or onward flight</h3></div></div>
       </div>
     </section>
 
     <footer class="footer">
-      <div class="draft">First Draft</div>
+      <div class="draft">Updated Draft</div>
       <div class="brandline">Unknown Chapter</div>
     </footer>
   </main>
