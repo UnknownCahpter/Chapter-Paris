@@ -2103,17 +2103,38 @@ body.modal-open {
     font-size: 1.25rem;
   }
 
-  /* Timeline Item - Stack vertically on mobile */
+  /* Timeline — stacked layout on mobile: dot left, time+content right */
   .timeline-item {
-    grid-template-columns: max-content 20px 1fr;
-    gap: 0.5rem;
-    min-height: 76px;
+    grid-template-columns: 20px 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "connector timepill"
+      "connector content";
+    gap: 0 0.75rem;
+    min-height: unset;
+  }
+
+  .timeline-connector {
+    grid-area: connector;
+    grid-row: 1 / -1;
+  }
+
+  .time-column {
+    grid-area: timepill;
+    text-align: left;
+    padding-top: 0.15rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .location-info {
+    grid-area: content;
+    padding-top: 0;
   }
 
   .time-text {
     font-size: 0.65rem;
-    letter-spacing: 0.06em;
-    padding: 0.12rem 0.4rem;
+    letter-spacing: 0.08em;
+    padding: 0.15rem 0.55rem;
   }
 
   .edit-input-time {
