@@ -1,0 +1,166 @@
+.dining-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-paper);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px rgba(17, 24, 39, 0.06);
+  border: 1px solid var(--color-stone);
+  font-family: var(--font-sans);
+}
+
+.dining-card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--color-title-red);
+  color: #ffffff;
+  border: 1px solid rgba(179, 14, 13, 0.22);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.dining-card-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--color-soft-surface);
+}
+
+.dining-card-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.45s ease;
+}
+
+.dining-card-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+}
+
+.dining-card-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dining-card-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  display: flex;
+  gap: 8px;
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(8px);
+}
+
+.dining-card-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.58);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.dining-card-dot.active {
+  background: #ffffff;
+  transform: scale(1.25);
+}
+
+.dining-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+}
+
+.dining-card-cuisine {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-light);
+}
+
+.dining-card-name {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: var(--font-serif);
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+.dining-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--color-ink);
+}
+
+.dining-card-star {
+  color: var(--color-title-red);
+  font-weight: 700;
+}
+
+.dining-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  font-size: 14px;
+  color: var(--color-ink-light);
+}
+
+.dining-card-remark {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-ink-light);
+}
+
+.dining-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.dining-card-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 92px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--color-title-red);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.dining-card-button:hover {
+  background: var(--color-subtitle);
+  transform: translateY(-1px);
+}
+
+.dining-card-button-secondary {
+  background: var(--color-soft-surface);
+  color: var(--color-ink);
+  border: 1px solid var(--color-stone);
+}
+
+.dining-card-button-secondary:hover {
+  background: #ffffff;
+}

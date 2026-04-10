@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Outfit:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root {
+  --color-bg: #FDF3E7;
+  --color-paper: #FFFFFF;
+  --color-ink: #1C1C1E;
+  --color-ink-light: #7B746D;
+  --color-accent: #9B6B3A;
+  --color-title-red: #B30E0D;
+  --color-stone: #E8E6E1;
+
+  /* ── Paris theme colours ─────────────────────────────── */
+  --color-action: #C9A96E;
+  --color-action-hover: #9B6B3A;
+  --color-subtitle: #9B6B3A;
+  --color-story-border: #C9A96E;
+  --color-tips-bg: rgba(201, 169, 110, 0.08);
+  --color-hotel-card: #FFF9F3;
+  --color-soft-surface: #FFF9F3;
+  --color-gold: #C9A96E;
+  --color-muted: #9D968E;
+
+  --font-sans: 'Outfit', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-display: 'Cormorant Garamond', serif;
+
+  --shadow-subtle: 0 4px 24px rgba(0, 0, 0, 0.04);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  color: var(--color-ink);
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* ── Dark Theme ────────────────────────────────────────── */
+[data-theme='dark'] {
+  --color-bg: #1f1915;
+  --color-paper: #2d241e;
+  --color-ink: #F7EFE4;
+  --color-ink-light: #CEBCA8;
+  --color-accent: #E0AE77;
+  --color-title-red: #E07A68;
+  --color-stone: #544338;
+  --color-action: #D4B87A;
+  --color-action-hover: #C9A96E;
+  --color-subtitle: #D0A076;
+  --color-story-border: #D4B87A;
+  --color-tips-bg: rgba(212, 184, 122, 0.14);
+  --color-hotel-card: #3A2E22;
+  --color-soft-surface: #3A2E22;
+  --color-gold: #D4B87A;
+  --color-muted: #9D968E;
+  --shadow-subtle: 0 12px 34px rgba(0, 0, 0, 0.18);
+}
+
+[data-theme='dark'] body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+}
+
+/* ── Font Size Scaling ─────────────────────────────────── */
+.font-size-normal {
+  font-size: 1rem;
+}
+
+.font-size-large {
+  font-size: 1.15rem;
+}
+
+.font-size-xlarge {
+  font-size: 1.3rem;
+}
