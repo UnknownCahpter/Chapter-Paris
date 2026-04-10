@@ -114,6 +114,8 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  display: block;
+  margin-top: 0.35rem;
 }
 
 .location-list {
