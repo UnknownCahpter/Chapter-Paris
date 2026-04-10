@@ -322,7 +322,8 @@ const VenueCard = ({
 );
 
 const DiningSection = () => {
-  const { restaurants, loading, error } = useRestaurants();
+  const city = tripConfig.venues?.find((v) => v.city)?.city ?? '';
+  const { restaurants, loading, error } = useRestaurants(city);
   const [activeSubTab, setActiveSubTab] = useState<DiningSubTab>('restaurant');
   const [photoOverrides, setPhotoOverrides] = useState<Record<string, string[]>>({});
   const [isGuideOpen, setIsGuideOpen] = useState(false);

@@ -134,8 +134,8 @@
 
 .timeline-item {
   display: grid;
-  grid-template-columns: 58px 24px 1fr auto;
-  gap: 1.1rem;
+  grid-template-columns: 72px 24px 1fr auto;
+  gap: 0.75rem;
   padding: 0;
   min-height: 94px;
 }
@@ -160,6 +160,10 @@
   text-transform: uppercase;
   background: #FFF9F3;
   border: 1px solid rgba(201, 169, 110, 0.26);
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .timeline-connector {

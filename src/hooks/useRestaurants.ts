@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { firestore } from '../firebase';
 import { fetchAndCachePhotos } from '../services/placesService';
 
@@ -83,7 +83,7 @@ async function runThrottled<T>(
   await Promise.all(workers);
 }
 
-export function useRestaurants(): {
+export function useRestaurants(city: string): {
   restaurants: Restaurant[];
   loading: boolean;
   error: string | null;
@@ -103,7 +103,7 @@ export function useRestaurants(): {
     }
 
     const unsubscribe = onSnapshot(
-      collection(firestore, 'restaurants'),
+      query(collection(firestore, 'restaurants'), where('city', '==', city)),
       (snapshot) => {
         const docs: RestaurantDoc[] = snapshot.docs.map((doc) => ({
           id: doc.id,
