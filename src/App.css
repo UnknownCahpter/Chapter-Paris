@@ -160,10 +160,7 @@
   text-transform: uppercase;
   background: #FFF9F3;
   border: 1px solid rgba(201, 169, 110, 0.26);
-  max-width: 100%;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .timeline-connector {
@@ -2108,13 +2105,15 @@ body.modal-open {
 
   /* Timeline Item - Stack vertically on mobile */
   .timeline-item {
-    grid-template-columns: 45px 20px 1fr;
+    grid-template-columns: max-content 20px 1fr;
     gap: 0.5rem;
     min-height: 76px;
   }
 
   .time-text {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    padding: 0.12rem 0.4rem;
   }
 
   .edit-input-time {
